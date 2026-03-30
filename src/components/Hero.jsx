@@ -178,7 +178,7 @@ export default function Hero() {
         </div>
 
         {/* 4. LAYER: HUD BOTTOM (Slogan & Buttons) - AT THE FRONT */}
-        <div className="flex flex-col md:flex-row justify-end md:justify-between items-center md:items-end gap-6 md:gap-16 relative z-50 pb-4 h-full md:pb-10 w-full mt-auto">
+        <div className="flex flex-col md:flex-row justify-end md:justify-between items-center md:items-end gap-6 md:gap-16 relative z-50 pb-28 md:pb-10 w-full mt-auto">
           {/* Faded gradient overlay on mobile to make text pop against image */}
           <div className="absolute inset-x-[-2rem] bottom-[-2rem] h-[60vh] bg-gradient-to-t from-primary via-primary/80 to-transparent pointer-events-none md:hidden -z-10" />
           
@@ -204,7 +204,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 1.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-3 md:gap-6 w-full md:w-auto"
+            className="hidden md:flex flex-col sm:flex-row gap-3 md:gap-6 w-full md:w-auto"
           >
             <motion.button 
               whileHover={{ scale: 1.05, y: -8 }}

@@ -93,8 +93,8 @@ export default function TopDelegate({ onClose }) {
             >
               <source src={carCrashVideo} type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 glass px-6 py-3 rounded-full text-white/50 text-[10px] tracking-[0.5em] font-black uppercase">
+            {/* Mobile Loading Badge shifts to bottom for a cleaner cinematic view */}
+            <div className="absolute bottom-16 md:bottom-auto md:top-1/2 left-1/2 -translate-x-1/2 md:-translate-y-1/2 flex items-center gap-3 glass px-6 py-3 rounded-full text-white/50 text-[10px] tracking-[0.5em] font-black uppercase whitespace-nowrap shadow-2xl">
                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                Cargando Top Delegate...
             </div>
@@ -107,38 +107,51 @@ export default function TopDelegate({ onClose }) {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full min-h-screen bg-primary/95 backdrop-blur-xl md:backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden pt-10"
+            className="w-full min-h-screen bg-primary/95 backdrop-blur-xl md:backdrop-blur-3xl p-0 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden"
           >
-            <div className="w-full flex justify-end md:fixed md:top-8 md:right-8 z-[350] mb-8 md:mb-0">
+            {/* Mobile Top App-bar */}
+            <div className="w-full flex md:hidden justify-between items-center p-6 border-b border-white/5 bg-primary/80 backdrop-blur-xl sticky top-0 z-[400]">
+               <span className="font-display font-black text-white/50 text-[10px] uppercase tracking-[0.4em]">BENJIMUN Elite</span>
                <button 
                   onClick={onClose}
-                  className="text-[#ff3333] hover:text-white transition-colors text-[9px] uppercase tracking-[0.4em] font-black glass px-5 md:px-6 py-3 md:py-3 rounded-full border border-red-500/20 shadow-2xl"
+                  className="text-white hover:text-accent transition-colors font-black text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-white/10 rounded-full"
+               >
+                  Cerrar
+               </button>
+            </div>
+
+            {/* Desktop Cerrar Button */}
+            <div className="hidden md:flex w-full justify-end fixed top-8 right-8 z-[350]">
+               <button 
+                  onClick={onClose}
+                  className="text-[#ff3333] hover:text-white transition-colors text-[9px] uppercase tracking-[0.4em] font-black glass px-6 py-3 rounded-full border border-red-500/20 shadow-2xl"
                >
                   Cerrar Archivo
                </button>
             </div>
 
             
-            <div className="max-w-5xl w-full space-y-20 relative z-10">
+            <div className="max-w-5xl w-full px-6 md:px-0 space-y-16 md:space-y-20 relative z-10 pt-12 md:pt-0">
                {/* Premium Header */}
-               <div className="text-center space-y-6">
+               <div className="text-center space-y-6 md:space-y-6">
                   <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="inline-flex items-center gap-3 text-accent text-[12px] uppercase tracking-[0.6em] font-black px-8 py-3 rounded-full border border-accent/20 bg-accent/[0.03]"
+                    className="inline-flex items-center gap-2 md:gap-3 text-accent text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-black px-6 md:px-8 py-2 md:py-3 rounded-full border border-accent/20 bg-accent/[0.05]"
                   >
-                     <Award size={16} /> PERFIL CLASIFICADO
+                     <Award size={14} className="md:w-4 md:h-4" /> PERFIL CLASIFICADO
                   </motion.div>
                   <motion.h1 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
-                    className="font-display text-4xl md:text-6xl lg:text-8xl font-black clash-display tracking-[-0.03em] uppercase leading-[0.9]"
-                    style={{ textShadow: "0 0 80px rgba(255,255,255,0.2)" }}
+                    className="font-display text-[2.8rem] leading-[1] sm:text-6xl md:text-8xl font-black clash-display tracking-[-0.03em] uppercase"
+                    style={{ textShadow: "0 0 80px rgba(255,255,255,0.15)" }}
                   >
-                     DELEGADO <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent">TOP</span> <br className="hidden md:block"/>
-                     <span className="block mt-2 md:mt-0">Santiago Mujica</span>
+                     DELEGADO <br className="md:hidden"/>
+                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent text-[3.2rem] sm:text-6xl md:text-8xl md:ml-4">TOP</span> <br/>
+                     <span className="block mt-4 md:mt-2">Santiago <br className="md:hidden"/>Mujica</span>
                   </motion.h1>
                </div>
 
@@ -198,27 +211,27 @@ export default function TopDelegate({ onClose }) {
                  </motion.div>
                </div>
 
-               {/* Gallery Grid - Using Unsplash placeholders with fallback paths */}
+               {/* Gallery Grid - Re-engineered for Mobile Snap Scrolling */}
                <motion.div 
                  initial={{ opacity: 0, y: 50 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 1.3 }}
-                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 w-full"
+                 className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 w-[110%] -ml-[5%] md:w-full md:ml-0 px-6 md:px-0 snap-x snap-mandatory pb-8 md:pb-0 hide-scrollbar"
                >
                  {[1, 2, 3, 4].map((num) => (
-                    <div key={num} className="relative group overflow-hidden rounded-3xl aspect-[3/4] glass border-white/5">
-                       {/* Try loading specific local images, or falling back */}
+                    <div key={num} className="relative group overflow-hidden rounded-3xl aspect-[3/4] md:aspect-[3/4] min-w-[80vw] sm:min-w-[50vw] md:min-w-0 glass border-white/5 snap-center shrink-0">
                        <img 
                           src={`/assets/${num}.jpg`}
                           onError={(e) => { e.target.src = `https://images.unsplash.com/photo-1556761175-5973fc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`; }}
                           alt={`Santiago Mujica ${num}`}
-                          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                          className="w-full h-full object-cover transition-transform duration-1000 md:group-hover:scale-110 filter md:grayscale md:group-hover:grayscale-0"
                        />
-                       <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                       <span className="absolute bottom-6 left-6 text-white/50 text-xs font-black uppercase tracking-[0.4em]">FOTO 0{num}</span>
+                       <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/20 to-transparent opacity-100 md:opacity-60 md:group-hover:opacity-100 transition-opacity duration-500" />
+                       <span className="absolute bottom-6 left-6 text-white/80 md:text-white/50 text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">FOTO 0{num}</span>
                     </div>
                  ))}
                </motion.div>
+
 
             </div>
           </motion.div>
