@@ -121,7 +121,7 @@ export default function Hero() {
                 transition={{ duration: 1.5, ease: 'easeOut' }}
                 className="font-display font-black text-center leading-none tracking-[-0.04em] select-none"
                 style={{
-                  fontSize: 'clamp(6rem, 20vw, 18rem)',
+                  fontSize: 'clamp(3rem, 15vw, 16rem)',
                   color: 'white',
                   // 100% Illuminated with horizontal/lateral blur
                   textShadow: `
@@ -194,7 +194,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.open('https://www.instagram.com/benjimun_/', '_blank')}
-              className="px-14 py-7 bg-accent text-primary font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden border border-accent"
+              className="px-8 py-5 md:px-14 md:py-7 bg-accent text-primary font-black text-[11px] md:text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden border border-accent w-full sm:w-auto"
             >
               <span className="relative z-10 font-bold">Visitanos!</span>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
@@ -203,7 +203,7 @@ export default function Hero() {
             <motion.button 
               whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
-              className="px-14 py-7 glass border-white/10 text-white font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden"
+              className="px-8 py-5 md:px-14 md:py-7 glass border-white/10 text-white font-black text-[11px] md:text-[13px] tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-accent/5 opacity-0 hover:opacity-100 transition-opacity" />
               <span className="relative z-10 font-bold">Contactar</span>

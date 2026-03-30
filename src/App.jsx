@@ -64,7 +64,7 @@ export default function App() {
                    <div className="inline-flex items-center gap-3 text-accent text-[11px] uppercase font-black tracking-[0.5em]">
                       <Timer size={14} /> El Reloj Estratégico
                    </div>
-                   <h2 className="font-display text-4xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none clash-display whitespace-nowrap">
+                   <h2 className="font-display text-3xl sm:text-5xl md:text-7xl lg:text-[7rem] font-black text-white uppercase tracking-tighter leading-none clash-display whitespace-normal md:whitespace-nowrap">
                       BENJIMUN I <span className="text-accent italic">Edición?</span>
                    </h2>
                    <Countdown />
@@ -87,9 +87,9 @@ export default function App() {
                         EL SIGNIFICADO
                       </div>
                       
-                      <h2 className="font-display text-4xl md:text-7xl font-black tracking-tight leading-[0.9] uppercase text-white mb-20 max-w-4xl mx-auto">
-                        MÁS QUE UN NOMBRE, <br/>
-                        <span className="text-accent underline decoration-white/5 underline-offset-16">UNA MISIÓN</span>
+                      <h2 className="font-display text-3xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[0.9] uppercase text-white mb-10 md:mb-20 max-w-4xl mx-auto">
+                        MÁS QUE UN NOMBRE, <br className="hidden md:block"/>
+                        <span className="text-accent underline decoration-white/5 underline-offset-[12px] md:underline-offset-16">UNA MISIÓN</span>
                       </h2>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
@@ -127,7 +127,7 @@ export default function App() {
                           <div className="flex items-center gap-3 text-accent text-[11px] font-black tracking-widest uppercase">
                              <Target size={16} /> Objetivos 2026
                           </div>
-                          <h3 className="font-display text-5xl font-black text-white uppercase leading-none">Nuestra <br/> <span className="text-accent italic">Estrategia</span></h3>
+                          <h3 className="font-display text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase leading-none">Nuestra <br/> <span className="text-accent italic">Estrategia</span></h3>
                           <p className="text-text-muted text-lg leading-relaxed max-w-md">
                              En BENJIMUN no solo simulamos la diplomacia; creamos un laboratorio de liderazgo donde cada decisión moldea el carácter de nuestros delegados.
                           </p>
@@ -170,25 +170,25 @@ export default function App() {
                 <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                   <FadeIn>
                     <div className="space-y-8">
-                       <h2 className="font-display text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase">
+                       <h2 className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter uppercase text-center md:text-left">
                          Lidera el <br/>
                          <span className="text-accent underline decoration-white/5 underline-offset-16">Cambio</span>
                        </h2>
-                       <p className="text-text-muted text-lg md:text-xl font-medium max-w-md leading-relaxed">
+                       <p className="text-text-muted text-lg md:text-xl font-medium max-w-md leading-relaxed text-center md:text-left mx-auto md:mx-0">
                           Sé parte de la delegación más prestigiosa. Las inscripciones para el próximo ciclo estratégico están abiertas.
                        </p>
                        
                        <div className="space-y-6 pt-4">
-                          {[
+                           {[
                             { i: ShieldCheck, t: 'Certificación Oficial', d: 'Avalada internacionalmente.' },
                             { i: Globe, t: 'Impacto Global', d: 'Conéctate con redes diplomáticas.' },
                             { i: Users, t: 'Mentoría Pro', d: 'Aprende de los mejores negociadores.' }
                           ].map((feat, idx) => (
-                            <div key={idx} className="flex gap-4">
+                            <div key={idx} className="flex gap-4 items-center md:items-start justify-center md:justify-start">
                               <div className="w-10 h-10 rounded-lg glass flex items-center justify-center text-accent shrink-0">
                                 <feat.i size={20} />
                               </div>
-                              <div>
+                              <div className="text-left">
                                 <h4 className="font-bold text-text-main text-sm uppercase tracking-widest">{feat.t}</h4>
                                 <p className="text-text-muted text-xs font-medium">{feat.d}</p>
                               </div>

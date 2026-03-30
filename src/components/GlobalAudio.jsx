@@ -18,7 +18,7 @@ export default function GlobalAudio() {
         // Fade in effect
         let currentVol = 0;
         const fadeInterval = setInterval(() => {
-          if (currentVol < 0.3) { // Max volume 30% to serve as background
+          if (currentVol < 0.3) {
             currentVol += 0.02;
             audio.volume = Math.min(currentVol, 0.3);
           } else {
@@ -26,8 +26,7 @@ export default function GlobalAudio() {
           }
         }, 200);
       } catch (err) {
-        console.warn('Autoplay prevented. Waiting for user interaction.');
-        // If autoplay is blocked by browser policies, wait for first interaction
+        // If autoplay is blocked by browser policies, wait for absolute strictly first interaction
         const startOnInteract = async () => {
           try {
             audio.volume = 0;
@@ -44,17 +43,17 @@ export default function GlobalAudio() {
               }
             }, 100);
             
-            document.removeEventListener('click', startOnInteract);
-            document.removeEventListener('scroll', startOnInteract);
-            document.removeEventListener('mousemove', startOnInteract);
+            ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(evt => {
+              document.removeEventListener(evt, startOnInteract);
+            });
           } catch (e) {
-            console.error('Playback failed:', e);
+            // silent ignore if failing
           }
         };
         
-        document.addEventListener('click', startOnInteract);
-        document.addEventListener('scroll', startOnInteract, { once: true });
-        document.addEventListener('mousemove', startOnInteract, { once: true });
+        ['click', 'scroll', 'mousemove', 'touchstart', 'keydown'].forEach(evt => {
+           document.addEventListener(evt, startOnInteract, { once: true });
+        });
       }
     };
 

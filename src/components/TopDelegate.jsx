@@ -8,49 +8,59 @@ export default function TopDelegate({ onClose }) {
   const [stage, setStage] = useState('video'); // 'video', 'tvOff', 'content'
   const audioRef = useRef(null);
 
-  // Mute global audio right away
   useEffect(() => {
     window.dispatchEvent(new Event('mute-global-audio'));
-    return () => {
-       // If we close this, we may want to reinstate audio, but for now we just keep it muted or let user reload
-    };
-  }, []);
+    
+    // Initiate new audio IMMEDIATELY when top delegate mounts (matching cinematic screen)
+    const audio = new Audio(telefonoAudio);
+    audio.loop = true;
+    audio.volume = 0;
+    audioRef.current = audio;
 
-  // Initiate new audio when entering content stage with fadein
-  useEffect(() => {
-    if (stage === 'content') {
-      const audio = new Audio(telefonoAudio);
-      audio.loop = true;
-      audio.volume = 0;
-      audioRef.current = audio;
-
-      const attemptPlay = async () => {
-        try {
-          await audio.play();
+    const attemptPlay = async () => {
+      try {
+        await audio.play();
+        let vol = 0;
+        const fade = setInterval(() => {
+          if (vol < 0.3) {
+            vol += 0.02;
+            audio.volume = Math.min(vol, 0.3);
+          } else {
+            clearInterval(fade);
+          }
+        }, 150);
+      } catch (err) {
+        console.warn('Autoplay blocked for telefono.mp3', err);
+        // Fallback for strict browsers on mobile
+        const forcePlay = () => {
+          audio.play();
           let vol = 0;
           const fade = setInterval(() => {
             if (vol < 0.3) {
-              vol += 0.02;
+              vol += 0.05;
               audio.volume = Math.min(vol, 0.3);
             } else {
               clearInterval(fade);
             }
-          }, 150);
-        } catch (err) {
-          console.warn('Autoplay blocked for telefono.mp3', err);
-        }
-      };
-      
-      attemptPlay();
-    }
+          }, 100);
+          window.removeEventListener('touchstart', forcePlay);
+          window.removeEventListener('click', forcePlay);
+        };
+        window.addEventListener('touchstart', forcePlay);
+        window.addEventListener('click', forcePlay);
+      }
+    };
     
+    attemptPlay();
+
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
     };
-  }, [stage]);
+  }, []);
+
 
   const handleVideoEnded = () => {
     setStage('tvOff');
@@ -97,14 +107,15 @@ export default function TopDelegate({ onClose }) {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full min-h-screen bg-primary/95 backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black"
+            className="w-full min-h-screen bg-primary/95 backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden"
           >
             <button 
                onClick={onClose}
-               className="fixed top-8 right-8 z-[350] text-[#ff3333] hover:text-white transition-colors text-[9px] uppercase tracking-[0.4em] font-black glass px-6 py-3 rounded-full border border-red-500/20"
+               className="fixed top-4 right-4 md:top-8 md:right-8 z-[350] text-[#ff3333] hover:text-white transition-colors text-[9px] uppercase tracking-[0.4em] font-black glass px-4 md:px-6 py-2 md:py-3 rounded-full border border-red-500/20 shadow-2xl"
             >
                Cerrar Archivo
             </button>
+
             
             <div className="max-w-5xl w-full space-y-20 relative z-10">
                {/* Premium Header */}
@@ -121,7 +132,7 @@ export default function TopDelegate({ onClose }) {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
-                    className="font-display text-5xl md:text-8xl font-black clash-display tracking-[-0.03em] uppercase leading-[0.9]"
+                    className="font-display text-4xl md:text-6xl lg:text-8xl font-black clash-display tracking-[-0.03em] uppercase leading-[0.9]"
                     style={{ textShadow: "0 0 80px rgba(255,255,255,0.2)" }}
                   >
                      DELEGADO <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent">TOP</span> <br/>
@@ -130,21 +141,21 @@ export default function TopDelegate({ onClose }) {
                </div>
 
                {/* Introduction Grid */}
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
                  <motion.div 
                     initial={{ opacity: 0, x: -40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.9 }}
-                    className="space-y-6"
+                    className="space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start"
                  >
-                    <p className="text-xl md:text-2xl font-medium text-text-muted leading-relaxed">
+                    <p className="text-lg md:text-2xl font-medium text-text-muted leading-relaxed max-w-lg">
                        La delegación del Bloque Estratégico de Negociación Juvenil e Impulso para las Naciones Unidas dijo:
                     </p>
                     <h3 className="font-display text-4xl font-black text-white italic clash-display">
                        ¡Presente y Votando!
                     </h3>
                     <div className="w-16 h-1 bg-accent/40 rounded-full" />
-                    <p className="text-sm tracking-wide text-text-muted leading-loose max-w-lg">
+                    <p className="text-xs md:text-sm tracking-wide text-text-muted leading-loose max-w-lg text-justify md:text-left">
                        En la primera Edición del Modelo de las Naciones Unidas del Colegio Pablo VI de Barquisimeto PAVIMUN. En este modelo nuestra delegación obtuvo los siguientes reconocimientos.
                     </p>
                  </motion.div>
@@ -159,27 +170,27 @@ export default function TopDelegate({ onClose }) {
                        <div className="absolute -top-32 -right-32 w-64 h-64 bg-accent/10 blur-[80px]" />
                        
                        <div className="space-y-4">
-                          <div className="flex items-center gap-4 text-accent">
+                          <div className="flex items-center gap-4 text-accent justify-center md:justify-start">
                              <Star size={24} fill="currentColor" />
-                             <span className="text-xs font-black uppercase tracking-[0.4em]">Trofeo Estratégico</span>
+                             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">Trofeo Estratégico</span>
                           </div>
-                          <h4 className="text-2xl font-bold font-display uppercase tracking-tighter">
-                             Santiago Mujica <br/> <span className="text-accent">1era Mención Honorífica</span>
+                          <h4 className="text-xl md:text-2xl font-bold font-display uppercase tracking-tighter text-center md:text-left">
+                             Santiago Mujica <br/> <span className="text-accent text-lg md:text-2xl">1era Mención Honorífica</span>
                           </h4>
-                          <p className="text-text-muted text-sm font-medium">En el comité de crisis: Auge y Caída del Petroestado</p>
+                          <p className="text-text-muted text-xs md:text-sm font-medium text-center md:text-left">En el comité de crisis: Auge y Caída del Petroestado</p>
                        </div>
 
-                       <div className="h-[1px] w-full bg-gradient-to-r from-white/10 to-transparent" />
+                       <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent md:bg-gradient-to-r md:from-white/10 md:to-transparent" />
 
                        <div className="space-y-4">
-                          <div className="flex items-center gap-4 text-accent">
+                          <div className="flex items-center gap-4 text-accent justify-center md:justify-start">
                              <Award size={24} />
-                             <span className="text-xs font-black uppercase tracking-[0.4em]">Escrito Sobresaliente</span>
+                             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">Escrito Sobresaliente</span>
                           </div>
-                          <h4 className="text-2xl font-bold font-display uppercase tracking-tighter">
-                             Santiago Mujica <br/> <span className="text-accent">Mejor DPO</span>
+                          <h4 className="text-xl md:text-2xl font-bold font-display uppercase tracking-tighter text-center md:text-left">
+                             Santiago Mujica <br/> <span className="text-accent text-lg md:text-2xl">Mejor DPO</span>
                           </h4>
-                          <p className="text-text-muted text-[10px] font-black tracking-[0.2em] uppercase">(Documento de Posición Oficial)</p>
+                          <p className="text-text-muted text-[9px] md:text-[10px] font-black tracking-[0.2em] uppercase text-center md:text-left">(Documento de Posición Oficial)</p>
                        </div>
                     </div>
                  </motion.div>
@@ -190,7 +201,7 @@ export default function TopDelegate({ onClose }) {
                  initial={{ opacity: 0, y: 50 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 1.3 }}
-                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 w-full"
                >
                  {[1, 2, 3, 4].map((num) => (
                     <div key={num} className="relative group overflow-hidden rounded-3xl aspect-[3/4] glass border-white/5">
