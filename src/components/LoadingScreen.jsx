@@ -48,9 +48,17 @@ export default function LoadingScreen({ onComplete }) {
 
   return (
     <motion.div
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
-      className="fixed inset-0 z-[9999] bg-primary flex flex-col items-center justify-center"
+      initial={{ opacity: 1 }}
+      exit={{ 
+        opacity: 0,
+        scale: 1.05,
+        filter: "blur(40px)",
+      }}
+      transition={{ 
+        duration: 1.2, 
+        ease: [0.43, 0.13, 0.23, 0.96] 
+      }}
+      className="fixed inset-0 z-[9999] bg-primary flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-accent/[0.04] blur-[120px] pointer-events-none" />

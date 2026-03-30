@@ -221,28 +221,52 @@ export default function App() {
               </section>
             </main>
 
-            <footer className="py-20 px-6 border-t border-white/5 relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
-               <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+            <footer className="py-24 px-6 border-t border-white/5 relative overflow-hidden bg-primary/50">
+               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
+               <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 items-center">
+                 
+                 {/* Brand */}
                  <div className="space-y-4 text-center md:text-left">
-                    <h4 className="font-display text-4xl font-black tracking-tighter text-white">BENJIMUN</h4>
-                    <p className="text-text-muted text-[10px] font-black uppercase tracking-[0.4em] opacity-40">
+                    <h4 className="font-display text-4xl font-black tracking-tighter text-white clash-display">BENJIMUN</h4>
+                    <p className="text-text-muted text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-relaxed">
                        BLOQUE ESTRATÉGICO DE NEGOCIACIÓN JUVENIL <br/>
                        & IMPULSO AL MODELO DE LAS NACIONES UNIDAS.
                     </p>
                  </div>
-                 
-                 <div className="flex gap-10">
-                    {['INSTAGRAM', 'TWITTER', 'LINKEDIN'].map(social => (
-                      <a key={social} href="#" className="text-text-muted text-[10px] font-black tracking-[0.2em] hover:text-accent transition-colors relative group underline-none no-underline">
-                        {social}
-                        <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
-                      </a>
-                    ))}
+
+                 {/* Socials - Only Instagram */}
+                 <div className="flex justify-center gap-12">
+                    <a 
+                      href="https://www.instagram.com/benjimun_/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-text-muted text-[11px] font-black tracking-[0.3em] hover:text-accent transition-all duration-300 relative group no-underline"
+                    >
+                      FOLLOW INSTAGRAM
+                      <span className="absolute -bottom-2 left-0 w-0 h-1 bg-accent group-hover:w-full transition-all duration-500" />
+                    </a>
+                 </div>
+
+                 {/* Credits - fotagreda */}
+                 <div className="flex flex-col items-center md:items-end gap-2 text-center md:text-right">
+                    <span className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em]">Crafted For Excellence</span>
+                    <a 
+                      href="https://agreda-portfolio.vercel.app/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-white text-[12px] font-black tracking-[0.2em] uppercase hover:text-accent transition-all duration-500 group relative no-underline px-4 py-2"
+                    >
+                      <span className="relative z-10">Creado por fotagreda</span>
+                      <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 blur-xl transition-opacity animate-pulse" />
+                      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-accent/20 group-hover:bg-accent transition-colors" />
+                    </a>
                  </div>
                </div>
-               <div className="text-center pt-20">
-                  <p className="text-text-muted text-[9px] font-black uppercase tracking-[0.1em] opacity-20">© 2026 BARQUISIMETO, LARA • VENEZUELA</p>
+
+               <div className="text-center pt-24">
+                  <p className="text-text-muted text-[10px] font-black uppercase tracking-[0.2em] opacity-20">
+                    © 2026 BARQUISIMETO, LARA • VENEZUELA
+                  </p>
                </div>
             </footer>
           </motion.div>

@@ -23,24 +23,29 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--color-primary);
+  font-family: var(--font-sans);
+  background-color: var(--color-primary);
   color: var(--color-text-main);
+  overflow-x: hidden;
+  position: relative;
 }
 
-.font-display {
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-/* Film grain */
+/* Film Grain Texture */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  filter: contrast(170%) brightness(1000%);
+  opacity: 0.04;
   pointer-events: none;
-  z-index: 9998;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 9999;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .glass {

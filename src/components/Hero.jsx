@@ -193,9 +193,10 @@ export default function Hero() {
             <motion.button 
               whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => window.open('https://www.instagram.com/benjimun_/', '_blank')}
               className="px-14 py-7 bg-accent text-primary font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden border border-accent"
             >
-              <span className="relative z-10 font-bold">Explorar Elitismo</span>
+              <span className="relative z-10 font-bold">Visitanos!</span>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
             </motion.button>
             
