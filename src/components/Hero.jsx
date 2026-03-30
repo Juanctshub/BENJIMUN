@@ -165,40 +165,44 @@ export default function Hero() {
         </div>
 
         {/* 4. LAYER: HUD BOTTOM (Slogan & Buttons) - AT THE FRONT */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-12 relative z-50">
+        <div className="flex flex-col md:flex-row justify-between items-end gap-16 relative z-50 pb-10">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.4 }}
-            className="space-y-4 max-w-sm text-center md:text-left drop-shadow-xl"
+            transition={{ duration: 1.2, delay: 1.4, ease: "easeOut" }}
+            className="space-y-5 max-w-md text-center md:text-left drop-shadow-2xl"
           >
-            <span className="text-[10px] font-black text-accent uppercase tracking-[0.5em] block mb-2 px-1">Motto Oficial</span>
+            <div className="inline-flex items-center gap-3">
+               <div className="w-8 h-[1px] bg-accent/30" />
+               <span className="text-[10px] font-black text-accent uppercase tracking-[0.6em] block px-1">Motto Oficial</span>
+            </div>
             <div className="overflow-hidden">
-               <h2 className="text-3xl md:text-5xl font-black text-white leading-tight uppercase tracking-[-0.02em] clash-display">
-                "Un solo mundo, <br/> un solo latido"
+               <h2 className="text-3xl md:text-5xl font-black text-white leading-[0.95] uppercase tracking-[-0.03em] clash-display">
+                "Un solo mundo, <br/>
+                <span className="text-accent italic">un solo latido"</span>
                </h2>
             </div>
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
-            className="flex flex-col sm:flex-row gap-5 w-full md:w-auto"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 1.6, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row gap-6 w-full md:w-auto"
           >
             <motion.button 
-              whileHover={{ scale: 1.05, y: -5 }}
+              whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
-              className="px-12 py-6 bg-accent text-primary font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_25px_60px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden"
+              className="px-14 py-7 bg-accent text-primary font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden border border-accent"
             >
               <span className="relative z-10 font-bold">Explorar Elitismo</span>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
             </motion.button>
             
             <motion.button 
-              whileHover={{ scale: 1.05, y: -5 }}
+              whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
-              className="px-12 py-6 glass border-white/10 text-white font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden"
+              className="px-14 py-7 glass border-white/10 text-white font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-accent/5 opacity-0 hover:opacity-100 transition-opacity" />
               <span className="relative z-10 font-bold">Contactar</span>
