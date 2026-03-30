@@ -15,6 +15,7 @@ export default function Navbar() {
   const links = [
     { label: 'Inicio', href: '#', icon: Home },
     { label: 'Significado', href: '#meaning', icon: Bookmark },
+    { label: 'Comités', href: '#committees', icon: Info },
     { label: 'Delegados', href: '#delegados', icon: Users },
     { label: 'Contáctanos', href: '#contact', icon: MessageCircle },
   ];

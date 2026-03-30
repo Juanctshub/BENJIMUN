@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Committees from './components/Committees';
 import Delegates from './components/Delegates';
-import { Mail, ArrowRight, ShieldCheck, Globe, Users } from 'lucide-react';
+import { Mail, ArrowRight, ShieldCheck, Globe, Users, Timer, Target, Award } from 'lucide-react';
 
 const FadeIn = ({ children, delay = 0 }) => (
   <motion.div
@@ -16,6 +17,39 @@ const FadeIn = ({ children, delay = 0 }) => (
     {children}
   </motion.div>
 );
+
+const Countdown = () => {
+    const [timeLeft, setTimeLeft] = useState({ d: 45, h: 12, m: 30, s: 0 });
+    
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                if (prev.s > 0) return { ...prev, s: prev.s - 1 };
+                if (prev.m > 0) return { ...prev, m: prev.m - 1, s: 59 };
+                if (prev.h > 0) return { ...prev, h: prev.h - 1, m: 59, s: 59 };
+                if (prev.d > 0) return { ...prev, d: prev.d - 1, h: 23, m: 59, s: 59 };
+                return prev;
+            });
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto py-10">
+            {[
+                { label: 'Días', val: timeLeft.d },
+                { label: 'Horas', val: timeLeft.h },
+                { label: 'Minutos', val: timeLeft.m },
+                { label: 'Segundos', val: timeLeft.s }
+            ].map((unit, i) => (
+                <div key={i} className="glass p-6 rounded-2xl border-white/5 flex flex-col items-center">
+                    <span className="font-display text-4xl font-black text-accent">{String(unit.val).padStart(2, '0')}</span>
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 mt-1">{unit.label}</span>
+                </div>
+            ))}
+        </div>
+    );
+};
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -37,9 +71,21 @@ export default function App() {
             <main>
               <Hero />
 
-              {/* ¿QUÉ SIGNIFICA BENJIMUN? - Section 2026 Style */}
+              {/* EVENT COUNTDOWN - 2026 THEME */}
+              <section className="py-20 px-6 relative overflow-hidden">
+                <div className="max-w-6xl mx-auto text-center space-y-8">
+                   <div className="inline-flex items-center gap-3 text-accent text-[10px] uppercase font-black tracking-[0.6em]">
+                      <Timer size={14} /> El Reloj Estratégico
+                   </div>
+                   <h2 className="font-display text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
+                      CONFERENCIA <span className="text-accent italic">PRÓXIMA</span>
+                   </h2>
+                   <Countdown />
+                </div>
+              </section>
+
+              {/* ¿QUÉ SIGNIFICA BENJIMUN? */}
               <section id="meaning" className="py-40 px-6 relative overflow-hidden bg-secondary/30">
-                {/* Background UN Emblem (Subtle) */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] pointer-events-none">
                   <svg className="w-[800px] h-[800px]" viewBox="0 0 200 200" fill="currentColor">
                     <path d="M100 10c-49.7 0-90 40.3-90 90s40.3 90 90 90 90-40.3 90-90-40.3-90-90-90zm0 162c-39.7 0-72-32.3-72-72s32.3-72 72-72 72 32.3 72 72-32.3 72-72 72z"/>
@@ -59,8 +105,7 @@ export default function App() {
                         <span className="text-accent underline decoration-white/5 underline-offset-16">UNA MISIÓN</span>
                       </h2>
 
-                      {/* Acronym Breakdown - Bento/Grid inspired */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
                         {[
                           { l: 'B', t: 'Bloque', d: 'Unión cohesionada de talento joven.' },
                           { l: 'E', t: 'Estratégico', d: 'Pensamiento crítico y acción planificada.' },
@@ -82,20 +127,54 @@ export default function App() {
                           </motion.div>
                         ))}
                       </div>
-
-                      <div className="pt-20">
-                         <p className="text-text-muted text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-                            🌐 <strong className="text-white">Bloque Estratégico de Negociación Juvenil e Impulso al Modelo de las Naciones Unidas</strong>. Un ecosistema diseñado para formar a los líderes del mañana en el corazón de Barquisimeto.
-                         </p>
-                      </div>
                     </div>
                   </FadeIn>
                 </div>
               </section>
 
+              <Committees />
+
+              {/* MISSION / VISION SECTION */}
+              <section className="py-40 px-6 border-y border-white/5 bg-secondary/10">
+                 <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
+                    <FadeIn>
+                       <div className="space-y-6">
+                          <div className="flex items-center gap-3 text-accent text-[11px] font-black tracking-widest uppercase">
+                             <Target size={16} /> Objetivos 2026
+                          </div>
+                          <h3 className="font-display text-5xl font-black text-white uppercase leading-none">Nuestra <br/> <span className="text-accent italic">Estrategia</span></h3>
+                          <p className="text-text-muted text-lg leading-relaxed max-w-md">
+                             En BENJIMUN no solo simulamos la diplomacia; creamos un laboratorio de liderazgo donde cada decisión moldea el carácter de nuestros delegados.
+                          </p>
+                          <ul className="space-y-4 pt-10">
+                             {[
+                               'Excelencia en Oratoria y Retórica',
+                               'Análisis Geopolítico de Vanguardia',
+                               'Liderazgo Ético y Fraternidad'
+                             ].map((li, i) => (
+                               <li key={i} className="flex items-center gap-4 text-white text-xs font-bold uppercase tracking-widest">
+                                 <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_10px_rgba(201,168,76,1)]" /> {li}
+                               </li>
+                             ))}
+                          </ul>
+                       </div>
+                    </FadeIn>
+                    <FadeIn delay={0.2}>
+                       <div className="glass p-10 rounded-[3rem] border-accent/20 flex flex-col items-center justify-center text-center space-y-6 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-accent/5 blur-[80px] -z-10" />
+                          <Award size={80} className="text-accent mb-4" />
+                          <h4 className="font-display text-3xl font-black text-white uppercase">Elitismo Académico</h4>
+                          <p className="text-text-muted text-sm leading-relaxed px-6">
+                            Reconocidos como el bloque de negociación más influyente de la región, BENJIMUN es el estándar de oro para los futuros diplomáticos.
+                          </p>
+                       </div>
+                    </FadeIn>
+                 </div>
+              </section>
+
               <Delegates />
 
-              {/* Contact / Inscriptions - Conversion Oriented */}
+              {/* Contact / Inscriptions */}
               <section id="contact" className="py-40 px-6 relative overflow-hidden">
                 <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                   <FadeIn>
@@ -135,6 +214,7 @@ export default function App() {
                       <h3 className="syncopate text-xl font-black mb-10 tracking-[0.2em] text-center">SOLICITUD DE INGRESO</h3>
                       
                       <form className="space-y-6">
+                        {/* Custom Input Styles */}
                         <div className="space-y-2">
                            <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em]">Nombre Completo</label>
                            <input type="text" className="w-full bg-white/[0.03] border border-white/10 rounded-sm px-6 py-4 text-white text-sm focus:border-accent outline-none transition-all font-bold uppercase tracking-widest placeholder-white/10" placeholder="Apellido, Nombre" />
@@ -144,7 +224,7 @@ export default function App() {
                            <input type="email" className="w-full bg-white/[0.03] border border-white/10 rounded-sm px-6 py-4 text-white text-sm focus:border-accent outline-none transition-all font-bold uppercase tracking-widest placeholder-white/10" placeholder="delegado@benjimun.com" />
                         </div>
                         <div className="pt-4">
-                           <button className="w-full py-6 bg-accent text-primary font-black text-xs tracking-[0.5em] uppercase hover:bg-white hover:shadow-[0_0_50px_rgba(201,168,76,0.3)] transition-all flex items-center justify-center gap-4">
+                           <button className="w-full py-6 bg-accent text-primary font-black text-xs tracking-[0.5em] uppercase hover:bg-white hover:border-accent transition-all flex items-center justify-center gap-4">
                               Enviar Solicitud <ArrowRight size={18} />
                            </button>
                         </div>
@@ -168,7 +248,7 @@ export default function App() {
                  
                  <div className="flex gap-10">
                     {['INSTAGRAM', 'TWITTER', 'LINKEDIN'].map(social => (
-                      <a key={social} href="#" className="text-text-muted text-[10px] font-black tracking-[0.2em] hover:text-accent transition-colors relative group">
+                      <a key={social} href="#" className="text-text-muted text-[10px] font-black tracking-[0.2em] hover:text-accent transition-colors relative group underline-none no-underline">
                         {social}
                         <span className="absolute -bottom-1 left-0 w-0 h-px bg-accent group-hover:w-full transition-all duration-300" />
                       </a>
