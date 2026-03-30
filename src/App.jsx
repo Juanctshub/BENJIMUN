@@ -62,9 +62,8 @@ export default function App() {
                    <div className="inline-flex items-center gap-3 text-accent text-[11px] uppercase font-black tracking-[0.5em]">
                       <Timer size={14} /> El Reloj Estratégico
                    </div>
-                   <h2 className="font-display text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
-                      BENJI MUN <br/>
-                      <span className="text-accent italic">I Edición?</span>
+                   <h2 className="font-display text-4xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none clash-display whitespace-nowrap">
+                      BENJIMUN I <span className="text-accent italic">Edición?</span>
                    </h2>
                    <Countdown />
                 </div>
