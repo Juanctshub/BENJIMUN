@@ -35,7 +35,7 @@ export default function Navbar() {
           {/* Logo Section */}
           <div className="flex items-center gap-4">
             <img src={benjiLogo} alt="BENJIMUN Logo" className="w-12 h-12 object-contain" />
-            <span className="font-display font-black text-2xl tracking-tighter text-white clash-display">BENJIMUN</span>
+            <span className="hidden md:block font-display font-black text-2xl tracking-tighter text-white clash-display">BENJIMUN</span>
           </div>
 
           {/* Desktop Nav */}
@@ -60,7 +60,7 @@ export default function Navbar() {
 
           {/* Mobile Nav Header (Only Logo on Mobile) */}
           <div className="md:hidden flex items-center gap-4 w-full justify-center">
-            <span className="font-display font-black text-xl tracking-tighter text-white/80 uppercase">Elite Protocol</span>
+            {/* Empty center area for mobile if needed, or completely removed */}
           </div>
         </div>
       </motion.nav>

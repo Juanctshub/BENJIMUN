@@ -113,8 +113,8 @@ export default function Hero() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 h-full flex flex-col justify-between py-24">
         
-        {/* HUD: Meta Info */}
-        <div className="flex justify-between items-start z-10 pt-10 md:pt-0">
+        {/* HUD: Meta Info - Hidden on Mobile to maximize space */}
+        <div className="hidden md:flex justify-between items-start z-10 pt-10 md:pt-0">
            <HUDElement label="Location" value="Barquisimeto • Lara" />
            <HUDElement label="Status" value="Representative Elite" side="right" className="items-end text-right hidden sm:flex" />
         </div>

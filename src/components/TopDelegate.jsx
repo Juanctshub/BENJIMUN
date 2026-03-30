@@ -89,7 +89,7 @@ export default function TopDelegate({ onClose }) {
               muted 
               playsInline
               onEnded={handleVideoEnded}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain md:object-cover"
             >
               <source src={carCrashVideo} type="video/mp4" />
             </video>
@@ -109,12 +109,12 @@ export default function TopDelegate({ onClose }) {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="w-full min-h-screen bg-primary/95 backdrop-blur-xl md:backdrop-blur-3xl p-0 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden"
           >
-            {/* Mobile Top App-bar */}
-            <div className="w-full flex md:hidden justify-between items-center p-6 border-b border-white/5 bg-primary/80 backdrop-blur-xl sticky top-0 z-[400]">
+            {/* Mobile Top App-bar - Floating and detached from top edge */}
+            <div className="w-[90%] mx-auto flex md:hidden justify-between items-center p-4 px-6 border border-white/10 bg-primary/80 backdrop-blur-xl sticky top-6 z-[400] rounded-full mt-6 mb-8 shadow-2xl">
                <span className="font-display font-black text-white/50 text-[10px] uppercase tracking-[0.4em]">BENJIMUN Elite</span>
                <button 
                   onClick={onClose}
-                  className="text-white hover:text-accent transition-colors font-black text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-white/10 rounded-full"
+                  className="text-white hover:text-accent transition-colors font-black text-[10px] uppercase tracking-[0.2em] px-4 py-2 bg-white/5 rounded-full"
                >
                   Cerrar
                </button>
@@ -146,12 +146,11 @@ export default function TopDelegate({ onClose }) {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
-                    className="font-display text-[2.8rem] leading-[1] sm:text-6xl md:text-8xl font-black clash-display tracking-[-0.03em] uppercase"
+                    className="font-display text-4xl sm:text-6xl md:text-8xl font-black clash-display tracking-[-0.03em] uppercase"
                     style={{ textShadow: "0 0 80px rgba(255,255,255,0.15)" }}
                   >
-                     DELEGADO <br className="md:hidden"/>
-                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent text-[3.2rem] sm:text-6xl md:text-8xl md:ml-4">TOP</span> <br/>
-                     <span className="block mt-4 md:mt-2">Santiago <br className="md:hidden"/>Mujica</span>
+                     DELEGADO <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent text-5xl sm:text-6xl md:text-8xl">TOP</span> <br/>
+                     <span className="block mt-4 md:mt-2 text-[2.8rem] sm:text-5xl md:text-8xl">Santiago Mujica</span>
                   </motion.h1>
                </div>
 
@@ -219,7 +218,7 @@ export default function TopDelegate({ onClose }) {
                  className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 w-[110%] -ml-[5%] md:w-full md:ml-0 px-6 md:px-0 snap-x snap-mandatory pb-8 md:pb-0 hide-scrollbar"
                >
                  {[1, 2, 3, 4].map((num) => (
-                    <div key={num} className="relative group overflow-hidden rounded-3xl aspect-[3/4] md:aspect-[3/4] min-w-[80vw] sm:min-w-[50vw] md:min-w-0 glass border-white/5 snap-center shrink-0">
+                    <div key={num} className="relative group overflow-hidden rounded-3xl aspect-[4/5] md:aspect-[3/4] min-w-[65vw] sm:min-w-[50vw] md:min-w-0 glass border-white/5 snap-center shrink-0">
                        <img 
                           src={`/assets/${num}.jpg`}
                           onError={(e) => { e.target.src = `https://images.unsplash.com/photo-1556761175-5973fc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`; }}
