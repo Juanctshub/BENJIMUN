@@ -4,6 +4,7 @@ import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Delegates from './components/Delegates';
+import GlobalAudio from './components/GlobalAudio';
 import { Mail, ArrowRight, ShieldCheck, Globe, Users, Timer, Target, Award } from 'lucide-react';
 import Videobenji from './assets/Videobenji.mp4';
 
@@ -40,7 +41,8 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="bg-primary min-h-screen selection:bg-accent selection:text-primary">
+    <div className="bg-primary min-h-screen selection:bg-accent selection:text-primary relative">
+      <GlobalAudio />
       <AnimatePresence mode="wait">
         {loading ? (
           <LoadingScreen key="loader" onComplete={() => setLoading(false)} />
