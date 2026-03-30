@@ -1,6 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { Star, Award, Search, ArrowUpRight } from 'lucide-react';
+import { Star, Award, Search, ArrowUpRight, Users } from 'lucide-react';
 
 const delegates = [
   { name: 'Andrea Valera', role: 'Presidenta', honors: 'Mejor Delegada SVP-MUN', accent: '#c9a84c' },
