@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700,900&display=swap');
 @import "tailwindcss";
 
 @theme {
+  --font-display: "Clash Display", "Space Grotesk", sans-serif;
+  --font-sans: "Satoshi", "Inter", sans-serif;
   --color-primary: #0a0a0f;
-  --color-secondary: #111118;
+  --color-secondary: #1a1a24;
   --color-surface: #16161d;
   --color-accent: #c9a84c;
   --color-accent-light: #e4c76b;
   --color-accent-glow: rgba(201, 168, 76, 0.35);
-  --color-text-main: #eeeef0;
-  --color-text-muted: #7a7a8c;
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
   --color-glass: rgba(22, 22, 29, 0.65);
   --color-glass-border: rgba(255, 255, 255, 0.06);
 }

@@ -42,15 +42,16 @@ function useRemoveWhiteBackground(src) {
   return result;
 }
 
-const HUDElement = ({ label, value, className }) => (
+const HUDElement = ({ label, value, className, side = "left" }) => (
   <motion.div 
-    initial={{ opacity: 0, x: -20 }}
+    initial={{ opacity: 0, x: side === "left" ? -40 : 40 }}
     animate={{ opacity: 1, x: 0 }}
-    className={`flex flex-col gap-1 ${className}`}
+    transition={{ duration: 1, delay: 0.8 }}
+    className={`flex flex-col gap-1 border-white/5 pb-2 ${className}`}
   >
-    <span className="text-[10px] font-black text-accent uppercase tracking-[0.4em]">{label}</span>
-    <span className="text-[13px] font-bold text-white uppercase tracking-widest">{value}</span>
-    <div className="h-[1px] w-full bg-accent/20 mt-2" />
+    <span className="text-[9px] font-black text-accent uppercase tracking-[0.5em]">{label}</span>
+    <span className="text-[14px] font-bold text-white uppercase tracking-[0.2em]">{value}</span>
+    <div className={`h-[1px] w-12 bg-accent/40 mt-1 ${side === "right" ? "ml-auto" : ""}`} />
   </motion.div>
 );
 
@@ -61,10 +62,11 @@ export default function Hero() {
 
   const mX = useMotionValue(0);
   const mY = useMotionValue(0);
-  const sX = useSpring(mX, { damping: 40, stiffness: 100 });
-  const sY = useSpring(mY, { damping: 40, stiffness: 100 });
-  const rotY = useTransform(sX, [-0.5, 0.5], ['-4deg', '4deg']);
-  const rotX = useTransform(sY, [-0.5, 0.5], ['4deg', '-4deg']);
+  const sX = useSpring(mX, { damping: 50, stiffness: 80 });
+  const sY = useSpring(mY, { damping: 50, stiffness: 80 });
+  
+  const rotY = useTransform(sX, [-0.5, 0.5], ['-3deg', '3deg']);
+  const rotX = useTransform(sY, [-0.5, 0.5], ['3deg', '-3deg']);
 
   const handleMouse = (e) => {
     const { clientX, clientY } = e;
@@ -72,116 +74,143 @@ export default function Hero() {
     mY.set((clientY / window.innerHeight) - 0.5);
   };
 
-  const textY = useTransform(scrollY, [0, 500], [0, -30]);
-  const imgY = useTransform(scrollY, [0, 500], [0, 50]);
+  const textY = useTransform(scrollY, [0, 500], [0, -40]);
+  const imgY = useTransform(scrollY, [0, 500], [0, 60]);
 
   return (
     <section
       ref={sectionRef}
       onMouseMove={handleMouse}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-primary"
-      style={{ perspective: '1200px' }}
+      className="relative h-screen flex items-center justify-center overflow-hidden bg-primary"
+      style={{ perspective: '2000px' }}
     >
-      {/* Background Video Layer */}
+      {/* 1. LAYER: Background Video (Behind everything) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-30 blur-[4px]"
+          className="w-full h-full object-cover opacity-30 blur-[8px]" // Soft blur as requested
         >
           <source src={bgVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/60 to-primary" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/30 to-primary" />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 h-screen flex flex-col justify-between py-24">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 h-full flex flex-col justify-between py-24">
         
-        {/* TOP HUD ROW */}
-        <div className="flex justify-between items-start">
+        {/* HUD: Meta Info */}
+        <div className="flex justify-between items-start z-10">
            <HUDElement label="Location" value="Barquisimeto • Lara" />
-           <HUDElement label="Role" value="Representative Elite" className="items-end text-right" />
+           <HUDElement label="Status" value="Representative Elite" side="right" className="items-end text-right" />
         </div>
 
-        {/* CENTER COMPOSITION: Title + Person */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="relative w-full h-full flex items-center justify-center">
+        {/* 2 & 3. LAYERS: BENJIMUN Glow Text & Character */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible">
+          <div className="relative w-full h-full flex items-center justify-center overflow-visible">
             
-            {/* Massive Backdrop Title */}
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5 }}
-              className="font-display font-black text-center leading-none tracking-[-0.05em]"
-              style={{
-                y: textY,
-                fontSize: 'clamp(5rem, 18vw, 16rem)',
-                color: 'transparent',
-                WebkitTextStroke: '1px rgba(255,255,255,0.06)',
-                textShadow: '0 0 60px rgba(201,168,76,0.15)',
-              }}
+            {/* 2. LAYER: BENJIMUN Illuminated (Behind character) */}
+            <motion.div
+              style={{ y: textY }}
+              className="absolute inset-0 flex items-center justify-center -z-10"
             >
-              BENJIMUN
-            </motion.h1>
+              <motion.h1
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, ease: 'easeOut' }}
+                className="font-display font-black text-center leading-none tracking-[-0.04em] select-none"
+                style={{
+                  fontSize: 'clamp(6rem, 20vw, 18rem)',
+                  color: 'white',
+                  // 100% Illuminated with horizontal/lateral blur
+                  textShadow: `
+                    0 0 20px rgba(255,255,255,1),
+                    0 0 40px rgba(201,168,76,0.8),
+                    -80px 0 100px rgba(201,168,76,0.3),
+                    80px 0 100px rgba(201,168,76,0.3)
+                  `,
+                  filter: 'drop-shadow(0 0 40px rgba(255,255,255,0.4))'
+                }}
+              >
+                BENJIMUN
+              </motion.h1>
+              
+              {/* Extra lateral light beams */}
+              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent blur-md" />
+            </motion.div>
 
-            {/* 3D Person */}
+            {/* 3. LAYER: 3D Character (On top of text) */}
             <motion.div
               style={{ rotateX: rotX, rotateY: rotY, y: imgY }}
-              className="absolute inset-0 flex items-center justify-center z-20"
+              className="absolute inset-0 flex items-center justify-center z-10"
             >
-              <div className="absolute w-[35%] h-[60%] rounded-full bg-accent/15 blur-[120px] mix-blend-screen opacity-40 shrink-0" />
+              {/* Backglow Aura */}
+              <div className="absolute w-[40%] h-[60%] rounded-full bg-accent/20 blur-[130px] opacity-40 mix-blend-screen" />
 
               {processedImage ? (
                 <motion.img
-                  initial={{ opacity: 0, y: 70 }}
+                  initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1.2, delay: 0.5 }}
+                  transition={{ duration: 1.2, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
                   src={processedImage}
                   alt="Representative"
-                  className="relative h-[65vh] md:h-[85vh] w-auto object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.9)]"
+                  className="relative h-[70vh] md:h-[90vh] w-auto object-contain drop-shadow-[0_45px_120px_rgba(0,0,0,0.9)]"
                 />
               ) : (
-                <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin" />
+                <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin" />
               )}
             </motion.div>
           </div>
         </div>
 
-        {/* BOTTOM HUD ROW - SLOGAN & BUTTONS */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-10">
+        {/* 4. LAYER: HUD BOTTOM (Slogan & Buttons) - AT THE FRONT */}
+        <div className="flex flex-col md:flex-row justify-between items-end gap-12 relative z-50">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
-            className="space-y-4 max-w-sm text-center md:text-left"
+            transition={{ duration: 1, delay: 1.4 }}
+            className="space-y-4 max-w-sm text-center md:text-left drop-shadow-xl"
           >
-            <span className="text-[10px] font-black text-accent uppercase tracking-[0.5em]">Official Motto 2026</span>
-            <h2 className="text-2xl md:text-4xl font-black text-white leading-tight uppercase tracking-tighter">
-              "Un solo mundo, <br/> un solo latido"
-            </h2>
+            <span className="text-[10px] font-black text-accent uppercase tracking-[0.5em] block mb-2 px-1">Motto Oficial</span>
+            <div className="overflow-hidden">
+               <h2 className="text-3xl md:text-5xl font-black text-white leading-tight uppercase tracking-[-0.02em] clash-display">
+                "Un solo mundo, <br/> un solo latido"
+               </h2>
+            </div>
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4 }}
-            className="flex flex-col sm:flex-row gap-4 w-full md:w-auto"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 1.6 }}
+            className="flex flex-col sm:flex-row gap-5 w-full md:w-auto"
           >
-            <button className="px-10 py-5 bg-accent text-primary font-black text-xs tracking-[0.4em] uppercase hover:bg-white transition-all shadow-[0_20px_50px_rgba(201,168,76,0.2)]">
-              Explorar Elitismo
-            </button>
-            <button className="px-10 py-5 glass border-white/10 text-white font-black text-xs tracking-[0.4em] uppercase hover:bg-white/10 transition-all">
-              Contactar
-            </button>
+            <motion.button 
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 bg-accent text-primary font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_25px_60px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden"
+            >
+              <span className="relative z-10 font-bold">Explorar Elitismo</span>
+              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+            </motion.button>
+            
+            <motion.button 
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 glass border-white/10 text-white font-black text-[13px] tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-accent/5 opacity-0 hover:opacity-100 transition-opacity" />
+              <span className="relative z-10 font-bold">Contactar</span>
+            </motion.button>
           </motion.div>
         </div>
 
       </div>
 
       {/* Decorative vertical scanner lines */}
-      <div className="absolute inset-y-0 left-12 w-px bg-white/5" />
-      <div className="absolute inset-y-0 right-12 w-px bg-white/5" />
+      <div className="absolute inset-y-0 left-12 w-px bg-white/5 -z-10" />
+      <div className="absolute inset-y-0 right-12 w-px bg-white/5 -z-10" />
     </section>
   );
 }
