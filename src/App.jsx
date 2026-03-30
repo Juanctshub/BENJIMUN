@@ -40,6 +40,15 @@ const Countdown = () => {
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({ name: '', email: '' });
+
+  const handleWhatsAppSubmit = (e) => {
+    e.preventDefault();
+    const phoneNumber = "584245027109";
+    const message = `Hola, soy ${formData.name}, quiero unirme al Bloque Estratégico BENJIMUN. Mi correo es ${formData.email}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+  };
 
   return (
     <div className="bg-primary min-h-screen selection:bg-accent selection:text-primary relative">
@@ -207,18 +216,32 @@ export default function App() {
                       
                       <h3 className="syncopate text-xl font-black mb-10 tracking-[0.2em] text-center">SOLICITUD DE INGRESO</h3>
                       
-                      <form className="space-y-6">
+                      <form className="space-y-6" onSubmit={handleWhatsAppSubmit}>
                         {/* Custom Input Styles */}
                         <div className="space-y-2">
                            <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em]">Nombre Completo</label>
-                           <input type="text" className="w-full bg-white/[0.03] border border-white/10 rounded-sm px-6 py-4 text-white text-sm focus:border-accent outline-none transition-all font-bold uppercase tracking-widest placeholder-white/10" placeholder="Apellido, Nombre" />
+                           <input 
+                             type="text" 
+                             required
+                             value={formData.name}
+                             onChange={(e) => setFormData({...formData, name: e.target.value})}
+                             className="w-full bg-white/[0.03] border border-white/10 rounded-sm px-6 py-4 text-white text-sm focus:border-accent outline-none transition-all font-bold uppercase tracking-widest placeholder-white/10" 
+                             placeholder="Apellido, Nombre" 
+                           />
                         </div>
                         <div className="space-y-2">
                            <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.3em]">Email Institucional</label>
-                           <input type="email" className="w-full bg-white/[0.03] border border-white/10 rounded-sm px-6 py-4 text-white text-sm focus:border-accent outline-none transition-all font-bold uppercase tracking-widest placeholder-white/10" placeholder="delegado@benjimun.com" />
+                           <input 
+                             type="email" 
+                             required
+                             value={formData.email}
+                             onChange={(e) => setFormData({...formData, email: e.target.value})}
+                             className="w-full bg-white/[0.03] border border-white/10 rounded-sm px-6 py-4 text-white text-sm focus:border-accent outline-none transition-all font-bold uppercase tracking-widest placeholder-white/10" 
+                             placeholder="delegado@benjimun.com" 
+                           />
                         </div>
                         <div className="pt-4">
-                           <button className="w-full py-6 bg-accent text-primary font-black text-xs tracking-[0.5em] uppercase hover:bg-white hover:border-accent transition-all flex items-center justify-center gap-4">
+                           <button type="submit" className="w-full py-6 bg-accent text-primary font-black text-xs tracking-[0.5em] uppercase hover:bg-white hover:border-accent transition-all flex items-center justify-center gap-4">
                               Enviar Solicitud <ArrowRight size={18} />
                            </button>
                         </div>
