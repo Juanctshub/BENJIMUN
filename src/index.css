@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #020617;
-  --color-secondary: #0f172a;
-  --color-accent: #f59e0b;
-  --color-accent-glow: rgba(245, 158, 11, 0.35);
-  --color-text-main: #f8fafc;
-  --color-text-muted: #94a3b8;
-  --color-glass: rgba(15, 23, 42, 0.6);
-  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-primary: #0a0a0f;
+  --color-secondary: #111118;
+  --color-surface: #16161d;
+  --color-accent: #c9a84c;
+  --color-accent-light: #e4c76b;
+  --color-accent-glow: rgba(201, 168, 76, 0.35);
+  --color-text-main: #eeeef0;
+  --color-text-muted: #7a7a8c;
+  --color-glass: rgba(22, 22, 29, 0.65);
+  --color-glass-border: rgba(255, 255, 255, 0.06);
 }
 
 * {
@@ -23,33 +25,34 @@ body {
   color: var(--color-text-main);
 }
 
-.syncopate {
-  font-family: 'Syncopate', sans-serif;
-  text-transform: uppercase;
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-/* Film grain overlay */
+/* Film grain */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9998;
-  opacity: 0.04;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.glass-card {
+.glass {
   background: var(--color-glass);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
   border: 1px solid var(--color-glass-border);
 }
 
-/* Scrollbar */
-html {
-  scrollbar-width: none;
-}
-::-webkit-scrollbar {
-  display: none;
+/* Hide scrollbar */
+html { scrollbar-width: none; }
+::-webkit-scrollbar { display: none; }
+
+/* Custom selection */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-primary);
 }

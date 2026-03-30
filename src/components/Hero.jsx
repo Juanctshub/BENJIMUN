@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'fram
 import { useRef, useState, useEffect } from 'react';
 import hayImage from '../assets/hay.png';
 
+// Transparent Background Engine (Canvas)
 function useRemoveWhiteBackground(src) {
   const [result, setResult] = useState(null);
 
@@ -24,10 +25,10 @@ function useRemoveWhiteBackground(src) {
         const brightness = (r + g + b) / 3;
         const saturation = Math.max(r, g, b) - Math.min(r, g, b);
 
-        if (brightness > 230 && saturation < 35) {
+        if (brightness > 245 && saturation < 20) {
           d[i + 3] = 0;
-        } else if (brightness > 200 && saturation < 55) {
-          const alpha = Math.max(0, ((255 - brightness) / 55) * 255);
+        } else if (brightness > 220 && saturation < 40) {
+          const alpha = Math.max(0, ((255 - brightness) / 35) * 255);
           d[i + 3] = Math.min(d[i + 3], Math.round(alpha));
         }
       }
@@ -45,128 +46,144 @@ export default function Hero() {
   const processedImage = useRemoveWhiteBackground(hayImage);
   const { scrollY } = useScroll();
 
-  // Subtle mouse 3D
+  // Subtle mouse 3D for depth
   const mX = useMotionValue(0);
   const mY = useMotionValue(0);
-  const sX = useSpring(mX, { damping: 30, stiffness: 80 });
-  const sY = useSpring(mY, { damping: 30, stiffness: 80 });
-  const rotY = useTransform(sX, [-0.5, 0.5], ['-3deg', '3deg']);
-  const rotX = useTransform(sY, [-0.5, 0.5], ['3deg', '-3deg']);
+  const sX = useSpring(mX, { damping: 40, stiffness: 100 });
+  const sY = useSpring(mY, { damping: 40, stiffness: 100 });
+  const rotY = useTransform(sX, [-0.5, 0.5], ['-5deg', '5deg']);
+  const rotX = useTransform(sY, [-0.5, 0.5], ['5deg', '-5deg']);
 
   const handleMouse = (e) => {
-    mX.set((e.clientX / window.innerWidth) - 0.5);
-    mY.set((e.clientY / window.innerHeight) - 0.5);
+    const { clientX, clientY } = e;
+    mX.set((clientX / window.innerWidth) - 0.5);
+    mY.set((clientY / window.innerHeight) - 0.5);
   };
 
-  const textY = useTransform(scrollY, [0, 500], [0, -40]);
-  const imgY = useTransform(scrollY, [0, 500], [0, 30]);
+  const textY = useTransform(scrollY, [0, 500], [0, -60]);
+  const imgY = useTransform(scrollY, [0, 500], [0, 40]);
+  const opacityText = useTransform(scrollY, [0, 300], [1, 0.2]);
 
   return (
     <section
       ref={sectionRef}
       onMouseMove={handleMouse}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ perspective: '1000px' }}
+      className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-primary px-4 md:px-0"
+      style={{ perspective: '1200px' }}
     >
-      {/* Subtle grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.04]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(245,158,11,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,.2) 1px, transparent 1px)',
-            backgroundSize: '80px 80px',
-            maskImage: 'radial-gradient(ellipse 60% 50% at 50% 50%, black 20%, transparent 100%)',
-          }}
+      {/* Background Grid & Ambient Glow */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(201,168,76,0.03)_0%,transparent_70%)]" />
+        <div 
+          className="absolute inset-0 opacity-[0.03]" 
+          style={{ 
+            backgroundImage: 'linear-gradient(to right, #ffffff10 1px, transparent 1px), linear-gradient(to bottom, #ffffff10 1px, transparent 1px)',
+            backgroundSize: '100px 100px'
+          }} 
         />
       </div>
 
-      {/* Core Composition: Text behind, Person in front */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl mx-auto px-6">
-        {/*
-          LAYERED COMPOSITION:
-          - Layer 1 (back): "BENJIMUN" text, massive, glowing
-          - Layer 2 (front): Person image, overlapping the text
-          - Layer 3 (bottom): Subtitle + CTA
-        */}
-        <div className="relative flex items-center justify-center">
-          {/* Layer 1: BENJIMUN illuminated text */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center justify-center">
+        
+        {/* COMPACT COMPOSITION: Text behind Person */}
+        <div className="relative w-full flex items-center justify-center min-h-[500px]">
+          
+          {/* Layer 1: BENJIMUN Massive Illuminated Text */}
           <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
+            style={{ y: textY, opacity: opacityText }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="syncopate font-bold text-center leading-none select-none whitespace-nowrap"
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+            className="font-display font-black text-center leading-none select-none tracking-[-0.05em] pointer-events-none"
             style={{
-              y: textY,
-              fontSize: 'clamp(4rem, 14vw, 12rem)',
-              textShadow: '0 0 80px rgba(245,158,11,0.25), 0 0 160px rgba(245,158,11,0.1)',
-              color: 'rgba(245,158,11,0.9)',
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(5rem, 18vw, 15rem)',
+              color: 'transparent',
+              WebkitTextStroke: '2px rgba(255,255,255,0.05)',
+              textShadow: '0 0 50px rgba(201,168,76,0.3)',
             }}
           >
             BENJIMUN
           </motion.h1>
 
-          {/* Layer 2: Person image ON TOP of the text */}
+          {/* Layer 2: Person floating ON TOP of the text */}
           <motion.div
             style={{ rotateX: rotX, rotateY: rotY, y: imgY }}
-            className="absolute inset-0 flex items-center justify-center transform-gpu pointer-events-none"
+            className="absolute inset-0 flex items-center justify-center transform-gpu pointer-events-none z-20"
           >
-            {/* Glow aura */}
-            <div className="absolute w-[60%] h-[80%] rounded-full bg-accent/10 blur-[80px]" />
+            {/* Glow Aura behind him but in front of text */}
+            <div className="absolute w-[40%] h-[60%] rounded-full bg-accent/20 blur-[100px] mix-blend-screen opacity-40" />
 
             {processedImage ? (
               <motion.img
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.85, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 src={processedImage}
-                alt="BENJIMUN Mascot"
-                className="relative h-[clamp(280px,50vw,550px)] w-auto object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+                alt="Representative"
+                className="relative h-[65vh] md:h-[75vh] w-auto object-contain drop-shadow-[0_40px_100px_rgba(0,0,0,0.8)]"
               />
             ) : (
-              <div className="h-[400px] flex items-center justify-center">
-                <div className="w-6 h-6 border-2 border-accent/40 border-t-accent rounded-full animate-spin" />
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-10 h-10 border-2 border-accent/20 border-t-accent rounded-full animate-spin" />
+                <span className="text-[10px] font-bold text-accent/50 uppercase tracking-widest">Constructing 3D Model</span>
               </div>
             )}
           </motion.div>
+
+          {/* Secondary Title Overlay for "Glow Fill" effect where he doesn't cover */}
+          <motion.h1
+            style={{ y: textY, opacity: useTransform(scrollY, [0, 500], [0.8, 0.1]) }}
+            className="absolute inset-0 flex items-center justify-center font-display font-black text-center leading-none select-none tracking-[-0.05em] pointer-events-none z-10"
+            style={{
+              fontSize: 'clamp(5rem, 18vw, 15rem)',
+              color: 'white',
+              mixBlendMode: 'overlay'
+            }}
+          >
+            BENJIMUN
+          </motion.h1>
         </div>
 
-        {/* Layer 3: Subtitle + CTA below the composition */}
+        {/* CTA & SUBTITLE - Compactly below image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="text-center mt-8 relative z-20"
+          transition={{ duration: 1, delay: 1.2 }}
+          className="relative z-30 text-center -mt-16 md:-mt-24 space-y-8"
         >
-          <p className="text-white/50 text-xs md:text-sm tracking-[0.4em] uppercase font-bold mb-6">
-            "Un solo mundo, un solo latido"
-          </p>
-
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="h-px w-8 bg-accent/40" />
-            <span className="text-accent text-[10px] font-extrabold tracking-[0.5em] uppercase">
-              📍 Barquisimeto, Lara
-            </span>
-            <div className="h-px w-8 bg-accent/40" />
+          <div className="space-y-2">
+            <h2 className="text-xl md:text-2xl font-bold tracking-[0.2em] uppercase text-text-main">
+              "Un solo mundo, un solo latido"
+            </h2>
+            <div className="flex items-center justify-center gap-3 text-accent font-black text-[11px] tracking-[0.6em] uppercase">
+               <span className="h-px w-8 bg-accent/30" />
+               Barquisimeto • Lara
+               <span className="h-px w-8 bg-accent/30" />
+            </div>
           </div>
-
+          
           <div className="flex flex-wrap gap-4 justify-center">
-            <a
-              href="#meaning"
-              className="px-8 py-4 bg-accent text-primary font-extrabold text-xs tracking-[0.2em] uppercase rounded-lg hover:bg-white hover:shadow-[0_0_40px_rgba(245,158,11,0.3)] transition-all duration-300 cursor-pointer no-underline"
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-5 bg-accent text-primary font-black text-xs tracking-[0.4em] uppercase rounded-sm hover:bg-white hover:shadow-[0_0_50px_rgba(201,168,76,0.4)] transition-all duration-500 shadow-xl"
             >
-              Descubre más
-            </a>
-            <a
-              href="#contact"
-              className="px-8 py-4 border border-white/10 text-white/60 font-bold text-xs tracking-[0.2em] uppercase rounded-lg hover:bg-white/5 hover:text-white transition-all duration-300 no-underline"
+              Explorar Elitismo
+            </motion.button>
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-5 border border-white/10 glass text-white font-black text-xs tracking-[0.4em] uppercase rounded-sm hover:bg-white/5 hover:text-white transition-all"
             >
-              Contáctanos
-            </a>
+              Contactar
+            </motion.button>
           </div>
         </motion.div>
       </div>
+
+      {/* Decorative vertical lines */}
+      <div className="absolute inset-y-0 left-12 w-px bg-white/5 hidden lg:block" />
+      <div className="absolute inset-y-0 right-12 w-px bg-white/5 hidden lg:block" />
     </section>
   );
 }
