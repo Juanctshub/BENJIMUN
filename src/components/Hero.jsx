@@ -126,7 +126,7 @@ export default function Hero() {
             {/* 2. LAYER: BENJIMUN Illuminated (Behind character) */}
             <motion.div
               style={{ y: textY }}
-              className="absolute inset-0 flex items-start pt-32 sm:pt-0 sm:items-center justify-center -z-10"
+              className="absolute inset-0 flex items-center pt-8 sm:pt-0 justify-center -z-10"
             >
               <motion.h1
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -156,7 +156,7 @@ export default function Hero() {
             {/* 3. LAYER: 3D Character (On top of text) */}
             <motion.div
               style={{ rotateX: rotX, rotateY: rotY, y: imgY }}
-              className="absolute inset-0 flex items-start sm:items-center justify-center pt-28 sm:pt-0 z-10"
+              className="absolute inset-0 flex items-start sm:items-center justify-center pt-[15vh] sm:pt-0 z-10"
             >
               {/* Backglow Aura */}
               <div className="absolute w-[80%] sm:w-[50%] h-[40%] sm:h-[60%] rounded-full bg-accent/20 blur-[80px] sm:blur-[130px] opacity-60 mix-blend-screen" />

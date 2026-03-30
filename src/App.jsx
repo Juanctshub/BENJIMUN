@@ -4,6 +4,7 @@ import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Delegates from './components/Delegates';
+import Secretario from './components/Secretario';
 import GlobalAudio from './components/GlobalAudio';
 import { Mail, ArrowRight, ShieldCheck, Globe, Users, Timer, Target, Award } from 'lucide-react';
 import Videobenji from './assets/Videobenji.mp4';
@@ -164,6 +165,8 @@ export default function App() {
               </section>
 
               <Delegates />
+              
+              <Secretario />
 
               {/* Contact / Inscriptions */}
               <section id="contact" className="py-40 px-6 relative overflow-hidden">

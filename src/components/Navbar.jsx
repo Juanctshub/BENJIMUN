@@ -27,7 +27,7 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className={`hidden md:block fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
+        className={`!hidden md:!block fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${
           scrolled ? 'py-4 bg-primary/80 backdrop-blur-xl border-b border-white/5' : 'py-8 bg-transparent'
         }`}
       >
