@@ -94,7 +94,7 @@ export default function Secretario() {
               className="space-y-6 text-white/70 text-sm md:text-lg max-w-2xl leading-relaxed"
             >
               <p>
-                <b>Benjamín</b> es la fuerza motriz detrás del Modelo de las Naciones Unidas. Como Secretario General, personifica la excelencia diplomática, el pensamiento estratégico y la resolución implacable de conflictos globales. Su liderazgo indiscutible forja la siguiente generación de delgados de élite.
+                <b>Benjamín</b> es la fuerza motriz detrás del bloque estratégico de negociación juvenil & impulso al modelo de las naciones unidas. Como Secretario General, personifica la excelencia diplomática, el pensamiento estratégico y la resolución implacable de conflictos globales. Su liderazgo indiscutible forja la siguiente generación de delegados de élite.
               </p>
               <p>
                 Reconocido por su capacidad analítica y su elocuencia en el estrado, ha establecido un estándar de exigencia insuperable. Su fortaleza no solo radica en el debate puro, sino en su visión arquitectónica para unir coaliciones donde otros ven barreras infranqueables.
