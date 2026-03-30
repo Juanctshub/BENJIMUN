@@ -66,10 +66,42 @@ export default function GlobalAudio() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleForceMute = () => {
+      if (audioRef.current && !isMuted) {
+        // Fade out
+        let vol = audioRef.current.volume;
+        const fadeOut = setInterval(() => {
+          if (vol > 0.05) {
+            vol -= 0.05;
+            audioRef.current.volume = vol;
+          } else {
+            audioRef.current.volume = 0;
+            audioRef.current.muted = true;
+            setIsMuted(true);
+            clearInterval(fadeOut);
+          }
+        }, 100);
+      }
+    };
+
+    window.addEventListener('mute-global-audio', handleForceMute);
+    return () => {
+      window.removeEventListener('mute-global-audio', handleForceMute);
+    };
+  }, [isMuted]);
+
   const toggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+      if (isMuted) {
+        audioRef.current.volume = 0.3;
+        audioRef.current.muted = false;
+        setIsMuted(false);
+      } else {
+        audioRef.current.volume = 0;
+        audioRef.current.muted = true;
+        setIsMuted(true);
+      }
     }
   };
 

@@ -1,11 +1,15 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { Star, Award, Search, ArrowUpRight, Users } from 'lucide-react';
+import TopDelegate from './TopDelegate';
 
 
 export default function Delegates() {
+  const [showTopDelegate, setShowTopDelegate] = useState(false);
+
   return (
-    <section id="delegados" className="py-40 px-6 relative overflow-hidden">
+    <>
+      <section id="delegados" className="py-40 px-6 relative overflow-hidden">
       <div className="max-w-6xl mx-auto space-y-24">
         
         {/* Header - Cinematic 2026 Style */}
@@ -27,6 +31,7 @@ export default function Delegates() {
         {/* Action Button */}
         <div className="flex justify-center items-center py-10">
            <motion.button 
+              onClick={() => setShowTopDelegate(true)}
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
               className="px-12 md:px-20 py-8 md:py-10 bg-accent text-primary font-black text-[12px] md:text-[15px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.4)] backdrop-blur-xl relative group overflow-hidden border border-accent rounded-2xl md:rounded-3xl"
@@ -88,5 +93,13 @@ export default function Delegates() {
 
       </div>
     </section>
+
+      <AnimatePresence>
+        {showTopDelegate && (
+          <TopDelegate onClose={() => setShowTopDelegate(false)} />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
+
