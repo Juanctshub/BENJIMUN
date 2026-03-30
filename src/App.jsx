@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Committees from './components/Committees';
 import Delegates from './components/Delegates';
 import { Mail, ArrowRight, ShieldCheck, Globe, Users, Timer, Target, Award } from 'lucide-react';
 import Videobenji from './assets/Videobenji.mp4';
@@ -117,8 +116,6 @@ export default function App() {
                   </FadeIn>
                 </div>
               </section>
-
-              <Committees />
 
               {/* MISSION / VISION SECTION */}
               <section className="py-40 px-6 border-y border-white/5 bg-secondary/10">
