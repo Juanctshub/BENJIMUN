@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X, Home, Users, Bookmark, MessageCircle, Info } from 'lucide-react';
+import benjiLogo from '../assets/benji.png';
 
 export default function Navbar() {
   const { scrollY } = useScroll();
@@ -34,8 +35,8 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Logo Section */}
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-accent rounded-sm flex items-center justify-center font-black text-primary text-xl">B</div>
-            <span className="font-display font-black text-2xl tracking-tighter text-white">BENJIMUN</span>
+            <img src={benjiLogo} alt="BENJIMUN Logo" className="w-12 h-12 object-contain" />
+            <span className="font-display font-black text-2xl tracking-tighter text-white clash-display">BENJIMUN</span>
           </div>
 
           {/* Desktop Nav */}

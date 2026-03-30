@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import Committees from './components/Committees';
 import Delegates from './components/Delegates';
 import { Mail, ArrowRight, ShieldCheck, Globe, Users, Timer, Target, Award } from 'lucide-react';
+import Videobenji from './assets/Videobenji.mp4';
 
 const FadeIn = ({ children, delay = 0 }) => (
   <motion.div
@@ -145,13 +146,19 @@ export default function App() {
                        </div>
                     </FadeIn>
                     <FadeIn delay={0.2}>
-                       <div className="glass p-10 rounded-[3rem] border-accent/20 flex flex-col items-center justify-center text-center space-y-6 relative overflow-hidden">
+                       <div className="glass p-3 rounded-[3rem] border-accent/20 relative overflow-hidden h-full min-h-[400px] shadow-[0_20px_50px_rgba(201,168,76,0.15)] flex flex-col group">
                           <div className="absolute inset-0 bg-accent/5 blur-[80px] -z-10" />
-                          <Award size={80} className="text-accent mb-4" />
-                          <h4 className="font-display text-3xl font-black text-white uppercase">Elitismo Académico</h4>
-                          <p className="text-text-muted text-sm leading-relaxed px-6">
-                            Reconocidos como el bloque de negociación más influyente de la región, BENJIMUN es el estándar de oro para los futuros diplomáticos.
-                          </p>
+                          <video
+                             autoPlay
+                             muted
+                             loop
+                             playsInline
+                             className="w-full h-full object-cover rounded-[2.5rem] grayscale-[30%] contrast-125 group-hover:grayscale-0 transition-all duration-700"
+                          >
+                             <source src={Videobenji} type="video/mp4" />
+                          </video>
+                          {/* Inner gold frame overlay */}
+                          <div className="absolute inset-0 border border-white/5 rounded-[3rem] pointer-events-none" />
                        </div>
                     </FadeIn>
                  </div>

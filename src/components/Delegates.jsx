@@ -2,80 +2,6 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Star, Award, Search, ArrowUpRight, Users } from 'lucide-react';
 
-const delegates = [
-  { name: 'Andrea Valera', role: 'Presidenta', honors: 'Mejor Delegada SVP-MUN', accent: '#c9a84c' },
-  { name: 'Juan Castillo', role: 'Secretario', honors: 'Mención Honorífica KAMEMUN', accent: '#f8fafc' },
-  { name: 'Sofia Mendez', role: 'Delegada Padrino', honors: 'Mejor Oratoria 2025', accent: '#c9a84c' },
-  { name: 'Ricardo Leon', role: 'Líder Estratégico', honors: 'Delegado Sobresaliente', accent: '#f8fafc' }
-];
-
-const DelegateCard = ({ delegate, index }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = ({ currentTarget, clientX, clientY }) => {
-    let { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  };
-
-  return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.8 }}
-      className="group relative bg-secondary/20 border border-white/5 rounded-[2.5rem] p-10 overflow-hidden transition-all duration-500 hover:border-accent/40"
-    >
-      {/* Spotlight Effect */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useTransform(
-            [mouseX, mouseY],
-            ([x, y]) => `radial-gradient(400px circle at ${x}px ${y}px, rgba(201,168,76,0.12), transparent 80%)`
-          ),
-        }}
-      />
-
-      <div className="relative z-10 space-y-6">
-        <div className="flex justify-between items-start">
-          <div className="w-14 h-14 rounded-full glass border-white/10 flex items-center justify-center text-accent">
-            <Users size={24} />
-          </div>
-          <motion.div 
-            whileHover={{ rotate: 45 }}
-            className="text-white/20 group-hover:text-accent transition-colors"
-          >
-            <ArrowUpRight size={24} />
-          </motion.div>
-        </div>
-
-        <div className="space-y-1">
-          <h3 className="font-display text-2xl font-black text-white uppercase tracking-tight group-hover:text-accent transition-colors">
-            {delegate.name}
-          </h3>
-          <p className="text-accent text-[10px] font-black uppercase tracking-[0.4em]">
-            {delegate.role}
-          </p>
-        </div>
-
-        <div className="pt-6 border-t border-white/5">
-          <div className="flex items-center gap-3 text-text-muted text-[11px] font-bold uppercase tracking-wider">
-            <Award size={14} className="text-accent" />
-            {delegate.honors}
-          </div>
-        </div>
-      </div>
-
-      {/* Decorative Index */}
-      <span className="absolute bottom-6 right-10 font-display text-8xl font-black text-white/[0.02] pointer-events-none group-hover:text-accent/[0.05] transition-colors">
-        0{index + 1}
-      </span>
-    </motion.div>
-  );
-};
 
 export default function Delegates() {
   return (
@@ -98,11 +24,19 @@ export default function Delegates() {
            </h2>
         </div>
 
-        {/* Grid Area */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-           {delegates.map((d, i) => (
-             <DelegateCard key={i} delegate={d} index={i} />
-           ))}
+        {/* Action Button */}
+        <div className="flex justify-center items-center py-10">
+           <motion.button 
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 md:px-20 py-8 md:py-10 bg-accent text-primary font-black text-[12px] md:text-[15px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.4)] backdrop-blur-xl relative group overflow-hidden border border-accent rounded-2xl md:rounded-3xl"
+            >
+              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              <span className="relative z-10 font-bold flex items-center justify-center gap-4 whitespace-nowrap">
+                 <Search size={24} className="animate-pulse" /> DESCUBRIR DELEGADO TOP
+              </span>
+            </motion.button>
         </div>
 
         {/* Top 1 Billboard - Spotlight Feature */}
