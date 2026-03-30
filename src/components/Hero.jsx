@@ -126,7 +126,7 @@ export default function Hero() {
             {/* 2. LAYER: BENJIMUN Illuminated (Behind character) */}
             <motion.div
               style={{ y: textY }}
-              className="absolute inset-0 flex items-center justify-center -z-10"
+              className="absolute inset-0 flex items-start pt-32 sm:pt-0 sm:items-center justify-center -z-10"
             >
               <motion.h1
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -134,14 +134,14 @@ export default function Hero() {
                 transition={{ duration: 1.5, ease: 'easeOut' }}
                 className="font-display font-black text-center leading-none tracking-[-0.04em] select-none"
                 style={{
-                  fontSize: 'clamp(3rem, 15vw, 16rem)',
+                  fontSize: 'clamp(5rem, 20vw, 16rem)',
                   color: 'white',
                   // 100% Illuminated with horizontal/lateral blur
                   textShadow: `
                     0 0 20px rgba(255,255,255,1),
                     0 0 40px rgba(201,168,76,0.8),
-                    -80px 0 100px rgba(201,168,76,0.3),
-                    80px 0 100px rgba(201,168,76,0.3)
+                    -80px 0 100px rgba(201,168,76,0.5),
+                    80px 0 100px rgba(201,168,76,0.5)
                   `,
                   filter: 'drop-shadow(0 0 40px rgba(255,255,255,0.4))'
                 }}
@@ -150,16 +150,16 @@ export default function Hero() {
               </motion.h1>
               
               {/* Extra lateral light beams */}
-              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent blur-md" />
+              <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-accent/60 to-transparent blur-md mt-[10%]" />
             </motion.div>
 
             {/* 3. LAYER: 3D Character (On top of text) */}
             <motion.div
               style={{ rotateX: rotX, rotateY: rotY, y: imgY }}
-              className="absolute inset-0 flex items-center justify-center z-10"
+              className="absolute inset-0 flex items-start sm:items-center justify-center pt-28 sm:pt-0 z-10"
             >
               {/* Backglow Aura */}
-              <div className="absolute w-[40%] h-[60%] rounded-full bg-accent/20 blur-[130px] opacity-40 mix-blend-screen" />
+              <div className="absolute w-[80%] sm:w-[50%] h-[40%] sm:h-[60%] rounded-full bg-accent/20 blur-[80px] sm:blur-[130px] opacity-60 mix-blend-screen" />
 
               {processedImage ? (
                 <motion.img
@@ -168,7 +168,7 @@ export default function Hero() {
                   transition={{ duration: 1.2, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
                   src={processedImage}
                   alt="Representative"
-                  className="relative h-[65vh] sm:h-[75vh] md:h-[90vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] md:drop-shadow-[0_45px_120px_rgba(0,0,0,0.9)] mt-10 md:mt-0"
+                  className="relative h-[45vh] sm:h-[75vh] lg:h-[90vh] w-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)] sm:drop-shadow-[0_45px_120px_rgba(0,0,0,0.9)]"
                 />
               ) : (
                 <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin" />
@@ -178,20 +178,23 @@ export default function Hero() {
         </div>
 
         {/* 4. LAYER: HUD BOTTOM (Slogan & Buttons) - AT THE FRONT */}
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-8 md:gap-16 relative z-50 pb-4 md:pb-10 w-full">
+        <div className="flex flex-col md:flex-row justify-end md:justify-between items-center md:items-end gap-6 md:gap-16 relative z-50 pb-4 h-full md:pb-10 w-full mt-auto">
+          {/* Faded gradient overlay on mobile to make text pop against image */}
+          <div className="absolute inset-x-[-2rem] bottom-[-2rem] h-[60vh] bg-gradient-to-t from-primary via-primary/80 to-transparent pointer-events-none md:hidden -z-10" />
+          
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 1.4, ease: "easeOut" }}
-            className="space-y-3 md:space-y-5 w-full text-center md:text-left drop-shadow-2xl flex flex-col items-center md:items-start"
+            className="space-y-2 md:space-y-5 w-full text-center md:text-left drop-shadow-2xl flex flex-col items-center md:items-start"
           >
             <div className="inline-flex items-center gap-3">
                <div className="hidden md:block w-8 h-[1px] bg-accent/30" />
-               <span className="text-[9px] md:text-[10px] font-black text-accent uppercase tracking-[0.6em] block px-1">Motto Oficial</span>
+               <span className="text-[10px] md:text-[10px] font-black text-accent uppercase tracking-[0.4em] md:tracking-[0.6em] block px-1">Motto Oficial</span>
             </div>
-            <div className="overflow-hidden">
-               <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white leading-[0.95] uppercase tracking-[-0.03em] clash-display">
-                "Un solo mundo, <br className="hidden sm:block"/>
+            <div className="overflow-visible">
+               <h2 className="text-[1.7rem] sm:text-3xl md:text-5xl font-black text-white leading-[1.1] uppercase tracking-[-0.03em] clash-display text-shadow-xl drop-shadow-lg">
+                "Un solo mundo, <br className="hidden md:block"/>
                 <span className="text-accent italic"> un solo latido"</span>
                </h2>
             </div>
@@ -201,28 +204,29 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 1.6, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-6 w-full md:w-auto"
+            className="flex flex-col sm:flex-row gap-3 md:gap-6 w-full md:w-auto"
           >
             <motion.button 
               whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.open('https://www.instagram.com/benjimun_/', '_blank')}
-              className="px-8 py-5 md:px-14 md:py-7 bg-accent text-primary font-black text-[11px] md:text-[13px] tracking-[0.5em] uppercase hover:bg-white transition-all shadow-[0_30px_70px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden border border-accent w-full sm:w-auto"
+              className="px-6 py-4 md:px-14 md:py-7 bg-accent text-primary font-black text-[12px] md:text-[13px] tracking-[0.4em] md:tracking-[0.5em] uppercase hover:bg-white transition-all shadow-xl md:shadow-[0_30px_70px_rgba(201,168,76,0.3)] backdrop-blur-xl relative group overflow-hidden border border-accent w-full sm:w-auto rounded-lg md:rounded-none"
             >
-              <span className="relative z-10 font-bold">Visitanos!</span>
+              <span className="relative z-10 font-bold">Visítanos!</span>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity" />
             </motion.button>
             
             <motion.button 
               whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-5 md:px-14 md:py-7 glass border-white/10 text-white font-black text-[11px] md:text-[13px] tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden w-full sm:w-auto"
+              className="px-6 py-4 md:px-14 md:py-7 glass border-white/10 text-white font-black text-[12px] md:text-[13px] tracking-[0.4em] md:tracking-[0.5em] uppercase hover:bg-white/10 backdrop-blur-xl transition-all shadow-2xl relative overflow-hidden w-full sm:w-auto rounded-lg md:rounded-none"
             >
               <div className="absolute inset-0 bg-accent/5 opacity-0 hover:opacity-100 transition-opacity" />
               <span className="relative z-10 font-bold">Contactar</span>
             </motion.button>
           </motion.div>
         </div>
+
 
       </div>
 

@@ -107,14 +107,16 @@ export default function TopDelegate({ onClose }) {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full min-h-screen bg-primary/95 backdrop-blur-xl md:backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden"
+            className="w-full min-h-screen bg-primary/95 backdrop-blur-xl md:backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden pt-10"
           >
-            <button 
-               onClick={onClose}
-               className="fixed top-4 right-4 md:top-8 md:right-8 z-[350] text-[#ff3333] hover:text-white transition-colors text-[9px] uppercase tracking-[0.4em] font-black glass px-4 md:px-6 py-2 md:py-3 rounded-full border border-red-500/20 shadow-2xl"
-            >
-               Cerrar Archivo
-            </button>
+            <div className="w-full flex justify-end md:fixed md:top-8 md:right-8 z-[350] mb-8 md:mb-0">
+               <button 
+                  onClick={onClose}
+                  className="text-[#ff3333] hover:text-white transition-colors text-[9px] uppercase tracking-[0.4em] font-black glass px-5 md:px-6 py-3 md:py-3 rounded-full border border-red-500/20 shadow-2xl"
+               >
+                  Cerrar Archivo
+               </button>
+            </div>
 
             
             <div className="max-w-5xl w-full space-y-20 relative z-10">
@@ -135,30 +137,30 @@ export default function TopDelegate({ onClose }) {
                     className="font-display text-4xl md:text-6xl lg:text-8xl font-black clash-display tracking-[-0.03em] uppercase leading-[0.9]"
                     style={{ textShadow: "0 0 80px rgba(255,255,255,0.2)" }}
                   >
-                     DELEGADO <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent">TOP</span> <br/>
-                     Santiago Mujica
+                     DELEGADO <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-white to-accent">TOP</span> <br className="hidden md:block"/>
+                     <span className="block mt-2 md:mt-0">Santiago Mujica</span>
                   </motion.h1>
                </div>
 
                {/* Introduction Grid */}
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
-                 <motion.div 
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.9 }}
-                    className="space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start"
-                 >
-                    <p className="text-lg md:text-2xl font-medium text-text-muted leading-relaxed max-w-lg">
-                       La delegación del Bloque Estratégico de Negociación Juvenil e Impulso para las Naciones Unidas dijo:
-                    </p>
-                    <h3 className="font-display text-4xl md:text-5xl font-black italic clash-display text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-accent/50 drop-shadow-sm">
-                       ¡Presente y Votando!
-                    </h3>
-                    <div className="w-16 h-1 bg-gradient-to-r from-accent to-transparent rounded-full" />
-                    <p className="text-xs md:text-sm tracking-wide text-text-muted leading-loose max-w-lg text-justify md:text-left">
-                       En la primera Edición del Modelo de las Naciones Unidas del Colegio Pablo VI de Barquisimeto PAVIMUN. En este modelo nuestra delegación obtuvo los siguientes reconocimientos.
-                    </p>
-                 </motion.div>
+                  <motion.div 
+                     initial={{ opacity: 0, x: -40 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     transition={{ delay: 0.9 }}
+                     className="space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start"
+                  >
+                     <p className="text-base sm:text-lg md:text-2xl font-medium text-text-muted leading-relaxed max-w-lg">
+                        La delegación del Bloque Estratégico de Negociación Juvenil e Impulso para las Naciones Unidas dijo:
+                     </p>
+                     <h3 className="font-display text-4xl sm:text-5xl md:text-5xl font-black italic clash-display text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-accent/50 drop-shadow-sm leading-tight text-center lg:text-left">
+                        ¡Presente y <br className="lg:hidden"/> Votando!
+                     </h3>
+                     <div className="w-16 h-1 bg-gradient-to-r from-accent to-accent/20 rounded-full mx-auto lg:mx-0" />
+                     <p className="text-xs md:text-sm tracking-wide text-text-muted leading-loose max-w-lg text-center lg:text-left">
+                        En la primera Edición del Modelo de las Naciones Unidas del Colegio Pablo VI de Barquisimeto PAVIMUN. En este modelo nuestra delegación obtuvo los siguientes reconocimientos.
+                     </p>
+                  </motion.div>
 
                  {/* Honors / Achievements Box */}
                  <motion.div 
@@ -170,27 +172,27 @@ export default function TopDelegate({ onClose }) {
                        <div className="absolute -top-32 -right-32 w-64 h-64 bg-accent/20 blur-[40px] md:blur-[80px]" />
                        
                        <div className="space-y-3 md:space-y-4 relative z-10">
-                          <div className="flex items-center gap-4 text-accent justify-center md:justify-start">
-                             <Star size={24} fill="currentColor" />
-                             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">Trofeo Estratégico</span>
-                          </div>
-                          <h4 className="text-xl md:text-2xl font-bold font-display uppercase tracking-tighter text-center md:text-left">
-                             Santiago Mujica <br/> <span className="text-accent text-lg md:text-2xl">1era Mención Honorífica</span>
-                          </h4>
+                           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-accent justify-center md:justify-start">
+                              <Star size={24} fill="currentColor" />
+                              <span className="text-[11px] md:text-xs font-black uppercase tracking-[0.4em]">Trofeo Estratégico</span>
+                           </div>
+                           <h4 className="text-2xl md:text-2xl font-bold font-display uppercase tracking-tighter text-center md:text-left">
+                              Santiago Mujica <br/> <span className="text-accent text-xl md:text-2xl">1era Mención Honorífica</span>
+                           </h4>
                           <p className="text-text-muted text-xs md:text-sm font-medium text-center md:text-left">En el comité de crisis: Auge y Caída del Petroestado</p>
                        </div>
 
                        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent md:bg-gradient-to-r md:from-white/10 md:to-transparent" />
 
                        <div className="space-y-4">
-                          <div className="flex items-center gap-4 text-accent justify-center md:justify-start">
-                             <Award size={24} />
-                             <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">Escrito Sobresaliente</span>
-                          </div>
-                          <h4 className="text-xl md:text-2xl font-bold font-display uppercase tracking-tighter text-center md:text-left">
-                             Santiago Mujica <br/> <span className="text-accent text-lg md:text-2xl">Mejor DPO</span>
-                          </h4>
-                          <p className="text-text-muted text-[9px] md:text-[10px] font-black tracking-[0.2em] uppercase text-center md:text-left">(Documento de Posición Oficial)</p>
+                           <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 text-accent justify-center md:justify-start">
+                              <Award size={24} />
+                              <span className="text-[11px] md:text-xs font-black uppercase tracking-[0.4em]">Escrito Sobresaliente</span>
+                           </div>
+                           <h4 className="text-2xl md:text-2xl font-bold font-display uppercase tracking-tighter text-center md:text-left">
+                              Santiago Mujica <br/> <span className="text-accent text-xl md:text-2xl">Mejor DPO</span>
+                           </h4>
+                           <p className="text-text-muted text-[10px] md:text-[10px] font-black tracking-[0.2em] uppercase text-center md:text-left">(Documento de Posición Oficial)</p>
                        </div>
                     </div>
                  </motion.div>
