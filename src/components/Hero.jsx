@@ -91,11 +91,11 @@ export default function Hero() {
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-30 blur-[8px]" // Soft blur as requested
+          className="w-full h-full object-cover opacity-60 blur-[4px]" // Increased visibility
         >
           <source src={bgVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary/30 to-primary" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/20 to-primary" />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 h-full flex flex-col justify-between py-24">

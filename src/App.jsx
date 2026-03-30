@@ -19,31 +19,16 @@ const FadeIn = ({ children, delay = 0 }) => (
 );
 
 const Countdown = () => {
-    const [timeLeft, setTimeLeft] = useState({ d: 45, h: 12, m: 30, s: 0 });
-    
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev.s > 0) return { ...prev, s: prev.s - 1 };
-                if (prev.m > 0) return { ...prev, m: prev.m - 1, s: 59 };
-                if (prev.h > 0) return { ...prev, h: prev.h - 1, m: 59, s: 59 };
-                if (prev.d > 0) return { ...prev, d: prev.d - 1, h: 23, m: 59, s: 59 };
-                return prev;
-            });
-        }, 1000);
-        return () => clearInterval(timer);
-    }, []);
-
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto py-10">
             {[
-                { label: 'Días', val: timeLeft.d },
-                { label: 'Horas', val: timeLeft.h },
-                { label: 'Minutos', val: timeLeft.m },
-                { label: 'Segundos', val: timeLeft.s }
+                { label: 'Días', val: '??' },
+                { label: 'Horas', val: '??' },
+                { label: 'Minutos', val: '??' },
+                { label: 'Segundos', val: '??' }
             ].map((unit, i) => (
-                <div key={i} className="glass p-6 rounded-2xl border-white/5 flex flex-col items-center">
-                    <span className="font-display text-4xl font-black text-accent">{String(unit.val).padStart(2, '0')}</span>
+                <div key={i} className="glass p-6 rounded-2xl border-white/10 flex flex-col items-center">
+                    <span className="font-display text-4xl font-black text-accent">{unit.val}</span>
                     <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 mt-1">{unit.label}</span>
                 </div>
             ))}
@@ -71,14 +56,15 @@ export default function App() {
             <main>
               <Hero />
 
-              {/* EVENT COUNTDOWN - 2026 THEME */}
-              <section className="py-20 px-6 relative overflow-hidden">
-                <div className="max-w-6xl mx-auto text-center space-y-8">
-                   <div className="inline-flex items-center gap-3 text-accent text-[10px] uppercase font-black tracking-[0.6em]">
+              {/* EVENT COUNTDOWN - MYSTERY STATE */}
+              <section className="py-20 px-6 relative overflow-hidden bg-secondary/10">
+                <div className="max-w-6xl mx-auto text-center space-y-6">
+                   <div className="inline-flex items-center gap-3 text-accent text-[11px] uppercase font-black tracking-[0.5em]">
                       <Timer size={14} /> El Reloj Estratégico
                    </div>
-                   <h2 className="font-display text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
-                      CONFERENCIA <span className="text-accent italic">PRÓXIMA</span>
+                   <h2 className="font-display text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+                      BENJI MUN <br/>
+                      <span className="text-accent italic">I Edición?</span>
                    </h2>
                    <Countdown />
                 </div>
