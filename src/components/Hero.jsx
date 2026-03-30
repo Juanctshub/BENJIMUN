@@ -183,20 +183,34 @@ export default function Hero() {
           <div className="absolute inset-x-[-2rem] bottom-[-2rem] h-[60vh] bg-gradient-to-t from-primary via-primary/80 to-transparent pointer-events-none md:hidden -z-10" />
           
           <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, delay: 1.4, ease: "easeOut" }}
-            className="space-y-2 md:space-y-5 w-full text-center md:text-left drop-shadow-2xl flex flex-col items-center md:items-start"
+            className="space-y-4 md:space-y-5 w-full text-center md:text-left drop-shadow-2xl flex flex-col items-center md:items-start relative z-10"
           >
-            <div className="inline-flex items-center gap-3">
-               <div className="hidden md:block w-8 h-[1px] bg-accent/30" />
-               <span className="text-[10px] md:text-[10px] font-black text-accent uppercase tracking-[0.4em] md:tracking-[0.6em] block px-1">Motto Oficial</span>
+            {/* Mobile Decorative Accent Top */}
+            <div className="md:hidden flex flex-col items-center gap-2 mb-1 w-full relative z-0">
+               <div className="w-1 h-1 rounded-full bg-accent/80 animate-ping absolute" />
+               <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+               <div className="w-px h-8 bg-gradient-to-b from-accent to-transparent" />
             </div>
-            <div className="overflow-visible">
-               <h2 className="text-[1.7rem] sm:text-3xl md:text-5xl font-black text-white leading-[1.1] uppercase tracking-[-0.03em] clash-display text-shadow-xl drop-shadow-lg">
-                "Un solo mundo, <br className="hidden md:block"/>
-                <span className="text-accent italic"> un solo latido"</span>
+
+            <div className="inline-flex items-center gap-3 bg-white/5 md:bg-transparent backdrop-blur-md md:backdrop-blur-none px-5 py-2 md:p-0 rounded-full border border-white/10 md:border-none shadow-[0_0_20px_rgba(255,255,255,0.02)] md:shadow-none min-w-[140px] justify-center relative z-10">
+               <div className="hidden md:block w-8 h-[1px] bg-accent/30" />
+               <span className="text-[9px] md:text-[10px] font-black text-white/50 md:text-accent uppercase tracking-[0.4em] md:tracking-[0.6em] block px-1">Motto Oficial</span>
+            </div>
+            <div className="overflow-visible relative z-10 px-4 md:px-0 mt-2">
+               <h2 className="text-[2rem] sm:text-3xl md:text-5xl font-black text-white leading-[1.05] md:leading-[1.1] uppercase tracking-[-0.03em] clash-display text-shadow-xl drop-shadow-2xl drop-shadow-[0_0_30px_rgba(0,0,0,1)]">
+                <span className="opacity-95 text-white/90">"Un solo mundo,</span> <br className=""/>
+                <span className="text-accent italic drop-shadow-[0_0_25px_rgba(201,168,76,0.3)]"> un solo latido"</span>
                </h2>
+            </div>
+
+            {/* Mobile Decorative Accent Bottom */}
+            <div className="md:hidden flex items-center justify-center w-full gap-4 opacity-50 pt-2 relative z-0">
+               <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-white/30" />
+               <div className="w-1.5 h-1.5 transform rotate-45 border border-white/50" />
+               <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-white/30" />
             </div>
           </motion.div>
 

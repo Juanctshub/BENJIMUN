@@ -107,10 +107,10 @@ export default function GlobalAudio() {
   return (
     <button 
       onClick={toggleMute}
-      className="fixed bottom-6 left-6 z-[200] w-12 h-12 glass rounded-full flex items-center justify-center text-white/50 hover:text-accent hover:bg-white/5 transition-all duration-300 shadow-xl border border-white/5"
+      className="fixed top-6 right-6 md:bottom-6 md:left-6 md:top-auto md:right-auto z-[200] w-10 h-10 md:w-12 md:h-12 glass rounded-full flex items-center justify-center text-white/50 hover:text-accent hover:bg-white/5 transition-all duration-300 shadow-xl border border-white/5"
       aria-label="Toggle Global Background Audio"
     >
-      {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+      {isMuted ? <VolumeX size={16} className="md:w-[18px]" /> : <Volume2 size={16} className="md:w-[18px]" />}
     </button>
   );
 }
