@@ -218,12 +218,12 @@ export default function TopDelegate({ onClose }) {
                  className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 w-[110%] -ml-[5%] md:w-full md:ml-0 px-6 md:px-0 snap-x snap-mandatory pb-8 md:pb-0 hide-scrollbar"
                >
                  {[1, 2, 3, 4].map((num) => (
-                    <div key={num} className="relative group overflow-hidden rounded-3xl aspect-[4/5] md:aspect-[3/4] min-w-[65vw] sm:min-w-[50vw] md:min-w-0 glass border-white/5 snap-center shrink-0">
+                    <div key={num} className="relative group overflow-hidden rounded-3xl aspect-square md:aspect-[3/4] min-w-[75vw] sm:min-w-[50vw] md:min-w-0 glass border-white/5 snap-center shrink-0 shadow-2xl">
                        <img 
                           src={`/assets/${num}.jpg`}
                           onError={(e) => { e.target.src = `https://images.unsplash.com/photo-1556761175-5973fc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`; }}
                           alt={`Santiago Mujica ${num}`}
-                          className="w-full h-full object-cover transition-transform duration-1000 md:group-hover:scale-110 filter md:grayscale md:group-hover:grayscale-0"
+                          className="w-full h-full object-cover object-top md:object-center transition-transform duration-1000 md:group-hover:scale-110 filter md:grayscale md:group-hover:grayscale-0"
                        />
                        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/20 to-transparent opacity-100 md:opacity-60 md:group-hover:opacity-100 transition-opacity duration-500" />
                        <span className="absolute bottom-6 left-6 text-white/80 md:text-white/50 text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">FOTO 0{num}</span>
