@@ -25,7 +25,7 @@ export default function Secretario() {
                transition={{ duration: 0.8 }}
                className="col-span-2 row-span-2 md:col-span-1 md:row-span-1 glass border-white/10 rounded-[2rem] overflow-hidden aspect-[4/5] relative group shadow-2xl"
              >
-                <img src="/assets/o.jpg" alt="Benjamín - Secretario General" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+                <img src="/assets/o.jpg" alt="Benjamin Eduardo Oroz Riveros - Secretario General" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
                 <span className="absolute bottom-4 left-5 font-black text-white/50 text-[10px] uppercase tracking-[0.4em]">Visión</span>
              </motion.div>
@@ -94,7 +94,7 @@ export default function Secretario() {
               className="space-y-6 text-white/70 text-sm md:text-lg max-w-2xl leading-relaxed"
             >
               <p>
-                <b>Benjamín</b> es la fuerza motriz detrás del bloque estratégico de negociación juvenil & impulso al modelo de las naciones unidas. Como Secretario General, personifica la excelencia diplomática, el pensamiento estratégico y la resolución implacable de conflictos globales. Su liderazgo indiscutible forja la siguiente generación de delegados de élite.
+                <b>Benjamin Eduardo Oroz Riveros</b> es la fuerza motriz detrás del bloque estratégico de negociación juvenil & impulso al modelo de las naciones unidas. Como Secretario General, personifica la excelencia diplomática, el pensamiento estratégico y la resolución implacable de conflictos globales. Su liderazgo indiscutible forja la siguiente generación de delegados de élite.
               </p>
               <p>
                 Reconocido por su capacidad analítica y su elocuencia en el estrado, ha establecido un estándar de exigencia insuperable. Su fortaleza no solo radica en el debate puro, sino en su visión arquitectónica para unir coaliciones donde otros ven barreras infranqueables.
