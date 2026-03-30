@@ -1,117 +1,132 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import hayImage from '../assets/hay.png';
 
 export default function Hero() {
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
   
-  // Mouse-based 3D Tilt
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-  
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  // High-Precision Mouse Tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { damping: 20, stiffness: 100 });
+  const springY = useSpring(mouseY, { damping: 20, stiffness: 100 });
 
-  const handleMouseMove = (event) => {
-    const rect = containerRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-    const xPct = (mouseX / width) - 0.5;
-    const yPct = (mouseY / height) - 0.5;
-    x.set(xPct);
-    y.set(yPct);
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set((clientX / innerWidth) - 0.5);
+    mouseY.set((clientY / innerHeight) - 0.5);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  // Parallax effects
-  const yOffset = useTransform(scrollY, [0, 500], [0, 150]);
-  const textYOffset = useTransform(scrollY, [0, 500], [0, -80]);
-  const scale = useTransform(scrollY, [0, 400], [1, 0.9]);
+  // Parallax Values
+  const rotateX = useTransform(springY, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], ["-15deg", "15deg"]);
+  const gridY = useTransform(scrollY, [0, 1000], [0, 400]);
 
   return (
     <section 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-      style={{ perspective: "1000px" }}
+      className="relative min-h-[120vh] flex items-center justify-center overflow-hidden bg-[#020617]"
+      style={{ perspective: "1200px" }}
     >
-      {/* Background Typography */}
+      {/* 3D Animated Grid Mesh */}
       <motion.div 
-        style={{ y: textYOffset }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0"
+        style={{ y: gridY }}
+        className="absolute inset-0 opacity-20 pointer-events-none"
       >
-        <motion.h1 
-          initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-          animate={{ opacity: 0.15, scale: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-[20vw] font-black tracking-tighter text-white uppercase leading-none opacity-10"
-        >
-          BENJIMUN
-        </motion.h1>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
       </motion.div>
 
-      {/* Main Persona Container */}
+      {/* BENJIMUN Background Text - Glitchy/Split Style */}
+      <div className="absolute inset-0 flex items-center justify-center z-0 select-none overflow-hidden">
+        <motion.div
+           initial={{ opacity: 0, scale: 0.5, letterSpacing: "1em" }}
+           animate={{ opacity: 0.1, scale: 1.1, letterSpacing: "0.2em" }}
+           transition={{ duration: 2, ease: "easeOut" }}
+           className="syncopate text-[22vw] font-black leading-none flex"
+        >
+          {/* Layered Text for Pseudo-3D Depth */}
+          <span className="relative">
+            BENJIMUN
+            <span className="absolute left-1 top-1 text-accent opacity-30">BENJIMUN</span>
+          </span>
+        </motion.div>
+      </div>
+
+      {/* The Central Persona with Background Removal Filter */}
       <motion.div 
-        style={{ scale, y: yOffset, rotateX, rotateY }}
-        className="relative z-10 w-full max-w-4xl flex flex-col items-center justify-center p-4 transform-gpu"
+        style={{ rotateX, rotateY, z: 100 }}
+        className="relative z-10 w-full max-w-5xl flex flex-col items-center justify-center p-4 transform-gpu"
       >
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          initial={{ opacity: 0, y: 100, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="relative group"
         >
-          {/* Animated Glow Behind Image */}
-          <div className="absolute inset-0 bg-accent rounded-full blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+          {/* Intense Glow Aura */}
+          <div className="absolute inset-0 bg-accent/20 rounded-full blur-[120px] mix-blend-screen scale-110 group-hover:bg-accent/30 transition-all duration-700" />
           
+          {/* The Image with CSS Filter Logic to 'Remove' White Background */}
+          {/* Using multiply blend mode on a white background image effectively removes the white if the parent is dark */}
+          {/* Better yet: We use a mask if the background is predictable */}
           <img 
             src={hayImage} 
-            alt="Benjimun Mascot" 
-            className="relative w-full h-auto max-h-[70vh] object-contain drop-shadow-[0_0_50px_rgba(245,158,11,0.2)]"
+            alt="Mascot" 
+            className="relative w-full h-auto max-h-[75vh] object-contain transition-transform duration-500 hover:scale-105"
             style={{ 
-              filter: 'contrast(1.1) brightness(1.1)',
-              mixBlendMode: 'plus-lighter' // Suggestion: Use plus-lighter if it has a white back on dark theme, or just transparent
+              filter: 'contrast(1.1) brightness(1.2) drop-shadow(0 0 30px rgba(245,158,11,0.3))',
+              mixBlendMode: 'plus-lighter' // This works well on dark backgrounds to merge white/bright areas
             }}
           />
+          
+          {/* SVG Filter Definition for advanced removal (Chromakey-like) */}
+          <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+            <defs>
+              <filter id="remove-white">
+                <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 1 0" />
+              </filter>
+            </defs>
+          </svg>
         </motion.div>
 
-        {/* Content Overlay */}
+        {/* Content Reveal Overlay */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-8 space-y-4"
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="text-center mt-4 space-y-6 max-w-3xl"
         >
-          <div className="inline-block px-4 py-1 glass rounded-full text-accent font-bold text-sm tracking-widest uppercase bg-accent/10 border-accent/20">
-            📍 Barquisimeto, Lara
+          <div className="flex items-center justify-center gap-4">
+             <div className="h-[1px] w-12 bg-accent/40" />
+             <span className="text-accent text-[10px] uppercase font-black tracking-[0.5em] syncopate">Barquisimeto • Lara</span>
+             <div className="h-[1px] w-12 bg-accent/40" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-black bg-gradient-to-r from-white via-white to-accent bg-clip-text text-transparent drop-shadow-sm">
-            Un solo mundo, un solo latido
-          </h2>
-          <p className="max-w-2xl mx-auto text-text-muted text-lg md:text-xl font-medium">
-            Bloque Estratégico de Negociación Juvenil e Impulso al Modelo de las Naciones Unidas
+          
+          <h1 className="text-3xl md:text-5xl font-black leading-tight tracking-tighter">
+            Bloque Estratégico de <span className="text-accent underline decoration-accent/20 underline-offset-8">Negociación Juvenil</span>
+          </h1>
+          
+          <p className="text-text-muted text-sm md:text-base font-medium uppercase tracking-[0.1em] opacity-80 max-w-xl mx-auto">
+            Impulso al Modelo de las Naciones Unidas. <br/>
+            "Un solo mundo, un solo latido"
           </p>
           
-          <div className="flex gap-4 justify-center pt-8">
-            <button className="btn-premium">Empezar Ahora</button>
-            <button className="px-8 py-4 glass rounded-full font-bold hover:bg-white/10 transition-all">Saber Más</button>
+          <div className="flex gap-4 justify-center pt-4">
+            <button className="glow-btn">Explorar</button>
+            <button className="px-10 py-5 bg-white/5 border border-white/5 rounded-none font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all syncopate">
+              Contactar
+            </button>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Decorative Orbs */}
-      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-accent border border-accent/20 rounded-full blur-[150px] opacity-5 -z-10" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-primary border border-white/5 rounded-full blur-[150px] opacity-10 -z-10" />
+      {/* Floating Decorative Elements */}
+      <div className="absolute top-0 right-0 p-12 overflow-hidden pointer-events-none opacity-20">
+         <span className="text-[200px] font-black text-white/5 syncopate leading-none">MUN</span>
+      </div>
     </section>
   );
 }

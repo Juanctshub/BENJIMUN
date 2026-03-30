@@ -1,103 +1,87 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Users, Home, Info, Menu } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useSpring, useMotionValue, useTransform } from 'framer-motion';
+import { Menu, X, Home, Users, Info, MessageSquare, Shield } from 'lucide-react';
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Magnetic Spring Physics
+  const springConfig = { damping: 15, stiffness: 150 };
+  const magneticX = useSpring(mouseX, springConfig);
+  const magneticY = useSpring(mouseY, springConfig);
 
-  const navLinks = [
-    { name: 'Inicio', icon: <Home size={20} />, href: '#' },
-    { name: 'Delegados', icon: <Users size={20} />, href: '#delegados' },
-    { name: 'Nosotros', icon: <Info size={20} />, href: '#about' },
-    { name: 'Contáctanos', icon: <Mail size={20} />, href: '#contact' },
+  const handleMouseMove = (e) => {
+    const { clientX, clientY, target } = e;
+    const { left, top, width, height } = target.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    mouseX.set((clientX - centerX) * 0.4);
+    mouseY.set((clientY - centerY) * 0.4);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  const navItems = [
+    { label: 'Inicio', icon: <Home size={18} />, href: '#' },
+    { label: 'Delegados', icon: <Users size={18} />, href: '#delegados' },
+    { label: 'Nosotros', icon: <Info size={18} />, href: '#about' },
+    { label: 'Seguridad', icon: <Shield size={18} />, href: '#security' },
+    { label: 'Contacto', icon: <MessageSquare size={18} />, href: '#contact' },
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] pointer-events-none p-6">
-      <div className="max-w-7xl mx-auto flex justify-between items-center relative">
-        
-        {/* Logo Section */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="pointer-events-auto flex items-center gap-2"
-        >
-          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center font-black text-primary shadow-[0_0_20px_var(--accent-glow)]">
-            B
+    <div className="fixed bottom-10 right-10 z-[1001]">
+      {/* Radial Menu Items */}
+      <AnimatePresence>
+        {isOpen && (
+          <div className="absolute bottom-20 right-0 flex flex-col items-end gap-3">
+            {navItems.map((item, i) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                initial={{ opacity: 0, x: 20, scale: 0.8 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 20, scale: 0.8 }}
+                transition={{ delay: (navItems.length - i) * 0.05 }}
+                className="flex items-center gap-4 group no-underline"
+              >
+                <div className="glass-premium px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white">{item.label}</span>
+                </div>
+                <div className="w-12 h-12 glass-premium rounded-xl flex items-center justify-center text-white/70 group-hover:text-accent group-hover:border-accent/40 group-hover:bg-accent/5 transition-all">
+                  {item.icon}
+                </div>
+              </motion.a>
+            ))}
           </div>
-          <span className="font-black text-xl tracking-tighter uppercase hidden md:block">
-            BENJIMUN
-          </span>
-        </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* Unique Desktop Navbar - Floating Pill */}
-        <motion.div 
-          initial={{ y: -100 }}
-          animate={{ 
-            y: 0,
-            scale: scrolled ? 1 : 1.05,
-            padding: scrolled ? '6px' : '10px'
-          }}
-          className={`pointer-events-auto hidden md:flex items-center gap-1 glass rounded-full px-2 py-1 transition-all duration-500 ${scrolled ? 'shadow-2xl' : 'bg-transparent border-transparent'}`}
+      {/* Main Magnetic Trigger */}
+      <motion.button
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => setIsOpen(!isOpen)}
+        style={{ x: magneticX, y: magneticY }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="w-16 h-16 glass-premium rounded-2xl flex items-center justify-center relative cursor-none group"
+      >
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          className="text-accent"
         >
-          {navLinks.map((link) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-              whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 transition-colors hover:text-accent"
-            >
-              {link.icon}
-              {link.name}
-            </motion.a>
-          ))}
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
         </motion.div>
-
-        {/* Mobile Toggle */}
-        <motion.button 
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden pointer-events-auto w-12 h-12 glass rounded-full flex items-center justify-center text-accent"
-        >
-          <Menu size={24} />
-        </motion.button>
-
-        {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="absolute top-20 right-0 w-64 glass rounded-3xl p-4 md:hidden pointer-events-auto"
-            >
-              <div className="flex flex-col gap-2">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 p-4 rounded-xl hover:bg-white/10 transition-colors"
-                  >
-                    {link.icon}
-                    <span className="font-bold">{link.name}</span>
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+        
+        {/* Glow effect */}
+        <div className="absolute inset-0 bg-accent/20 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+      </motion.button>
+    </div>
   );
 }

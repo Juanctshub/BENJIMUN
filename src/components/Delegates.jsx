@@ -1,106 +1,115 @@
-import { motion } from 'framer-motion';
-import { Award, Star, TrendingUp, ShieldCheck } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef, MouseEvent } from 'react';
+import { Crown, Sparkles, Zap, ShieldAlert } from 'lucide-react';
+
+const SpotlightCard = ({ title, description, icon: Icon, delay }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = ({ currentTarget, clientX, clientY }) => {
+    let { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay }}
+      className="group relative h-96 w-full overflow-hidden rounded-[2rem] glass-premium p-8 transition-all hover:border-accent/40"
+    >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[2rem] transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useTransform(
+            [mouseX, mouseY],
+            ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, rgba(245, 158, 11, 0.1), transparent 40%)`
+          ),
+        }}
+      />
+      
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center text-accent group-hover:scale-110 transition-transform">
+          <Icon size={24} />
+        </div>
+        <div>
+          <h3 className="syncopate text-lg font-bold mb-4 tracking-tight group-hover:text-accent transition-colors">
+            {title}
+          </h3>
+          <p className="text-sm text-text-muted leading-relaxed font-medium">
+            {description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 export default function Delegates() {
-  const features = [
+  const cards = [
     {
-      title: "Liderazgo",
-      desc: "Formamos el carácter de los líderes del mañana a través del debate.",
-      icon: <TrendingUp className="text-accent" />,
+      title: "Excelencia",
+      description: "El estándar más alto de negociación para jóvenes líderes mundiales.",
+      icon: Crown,
+      delay: 0.1
     },
     {
-      title: "Diplomacia",
-      desc: "Resolución de conflictos internacionales con elegancia y estrategia.",
-      icon: <Award className="text-accent" />,
+      title: "Agilidad",
+      description: "Toma de decisiones estratégica en entornos de alta presión diplomática.",
+      icon: Zap,
+      delay: 0.2
     },
     {
-      title: "Impacto Social",
-      desc: "Un solo latido que resuena en toda la comunidad juvenil de Lara.",
-      icon: <ShieldCheck className="text-accent" />,
+      title: "Protocolo",
+      description: "Dominio absoluto de la etiqueta y el formalismo internacional.",
+      icon: ShieldAlert,
+      delay: 0.3
     }
   ];
 
   return (
-    <section id="delegados" className="py-24 px-6 relative overflow-hidden">
+    <section id="delegados" className="py-32 px-6 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-24 gap-12 text-center md:text-left">
           <div className="max-w-2xl">
-            <motion.h3 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="text-accent font-black tracking-widest text-sm uppercase mb-4"
-            >
-              Nuestra Comunidad
-            </motion.h3>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-6xl font-black"
-            >
-              Forjando los mejores <span className="text-accent">Delegados</span>
-            </motion.h2>
+            <h2 className="syncopate text-4xl md:text-6xl font-black mb-8 leading-[1.1]">
+              Comunidad <br/>
+              <span className="text-accent italic">DELEGADOS ELITE</span>
+            </h2>
+            <p className="text-text-muted text-lg max-w-lg leading-relaxed font-medium">
+              Formamos el futuro de la diplomacia con un enfoque táctico y una visión global inquebrantable.
+            </p>
           </div>
-          
+
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="flex-shrink-0"
+             whileHover={{ scale: 1.05 }}
+             whileTap={{ scale: 0.95 }}
+             className="relative"
           >
-            {/* Unique Uiverse-Style Button */}
-            <button className="uiverse-btn group relative overflow-hidden px-8 py-5 rounded-2xl bg-secondary border border-glass-border font-bold text-lg tracking-wide transition-all hover:scale-105 active:scale-95 shadow-2xl">
-              <span className="relative z-10 flex items-center gap-3">
-                <Star size={22} className="fill-accent text-accent" />
-                Descubrir DELEGADO TOP
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            {/* Liquid / Top Tier Button */}
+            <button className="liquid-btn relative px-12 py-6 rounded-none syncopate font-black text-xs tracking-[0.3em] uppercase bg-white text-primary hover:text-white transition-colors overflow-hidden group">
+               <span className="relative z-10 flex items-center gap-2">
+                 <Sparkles size={16} />
+                 Descubrir DELEGADO TOP
+               </span>
+               <div className="absolute inset-0 bg-accent translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.87,0,0.13,1)]" />
             </button>
+            <div className="absolute -inset-4 bg-accent/20 blur-3xl rounded-full -z-10 animate-pulse" />
           </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((f, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="glass p-8 rounded-[2.5rem] hover:bg-white/[0.07] transition-colors border-white/5"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
-                {f.icon}
-              </div>
-              <h4 className="text-2xl font-black mb-4">{f.title}</h4>
-              <p className="text-text-muted leading-relaxed text-lg">
-                {f.desc}
-              </p>
-            </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {cards.map((card, i) => (
+            <SpotlightCard key={i} {...card} />
           ))}
         </div>
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .uiverse-btn {
-          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-          box-shadow: 0 10px 40px -10px rgba(245, 158, 11, 0.4);
-          overflow: hidden;
-        }
-        .uiverse-btn::after {
-          content: '';
-          position: absolute;
-          width: 50px;
-          height: 100%;
-          background-color: #fff;
-          top: 0;
-          left: -100%;
-          filter: blur(30px);
-          opacity: 0.2;
-          transform: skewX(-20deg);
-          animation: btn-shine 3s infinite;
-        }
-        @keyframes btn-shine {
-          0% { left: -100%; }
-          20%, 100% { left: 200%; }
+        .liquid-btn {
+          box-shadow: 0 20px 50px rgba(245, 158, 11, 0.3);
         }
       `}} />
     </section>
