@@ -107,7 +107,7 @@ export default function TopDelegate({ onClose }) {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full min-h-screen bg-primary/95 backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden"
+            className="w-full min-h-screen bg-primary/95 backdrop-blur-xl md:backdrop-blur-3xl p-6 md:p-12 lg:p-24 pb-40 text-white relative flex flex-col items-center selection:bg-accent selection:text-black overflow-x-hidden"
           >
             <button 
                onClick={onClose}
@@ -151,10 +151,10 @@ export default function TopDelegate({ onClose }) {
                     <p className="text-lg md:text-2xl font-medium text-text-muted leading-relaxed max-w-lg">
                        La delegación del Bloque Estratégico de Negociación Juvenil e Impulso para las Naciones Unidas dijo:
                     </p>
-                    <h3 className="font-display text-4xl font-black text-white italic clash-display">
+                    <h3 className="font-display text-4xl md:text-5xl font-black italic clash-display text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-accent/50 drop-shadow-sm">
                        ¡Presente y Votando!
                     </h3>
-                    <div className="w-16 h-1 bg-accent/40 rounded-full" />
+                    <div className="w-16 h-1 bg-gradient-to-r from-accent to-transparent rounded-full" />
                     <p className="text-xs md:text-sm tracking-wide text-text-muted leading-loose max-w-lg text-justify md:text-left">
                        En la primera Edición del Modelo de las Naciones Unidas del Colegio Pablo VI de Barquisimeto PAVIMUN. En este modelo nuestra delegación obtuvo los siguientes reconocimientos.
                     </p>
@@ -166,10 +166,10 @@ export default function TopDelegate({ onClose }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1.1 }}
                  >
-                    <div className="glass p-10 rounded-[3rem] border-accent/20 relative space-y-10 group overflow-hidden">
-                       <div className="absolute -top-32 -right-32 w-64 h-64 bg-accent/10 blur-[80px]" />
+                    <div className="glass p-8 md:p-10 rounded-3xl md:rounded-[3rem] border-accent/20 relative space-y-8 md:space-y-10 group overflow-hidden shadow-2xl">
+                       <div className="absolute -top-32 -right-32 w-64 h-64 bg-accent/20 blur-[40px] md:blur-[80px]" />
                        
-                       <div className="space-y-4">
+                       <div className="space-y-3 md:space-y-4 relative z-10">
                           <div className="flex items-center gap-4 text-accent justify-center md:justify-start">
                              <Star size={24} fill="currentColor" />
                              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">Trofeo Estratégico</span>

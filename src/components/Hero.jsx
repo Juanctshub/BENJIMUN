@@ -3,22 +3,33 @@ import { useRef, useState, useEffect } from 'react';
 import hayImage from '../assets/hay.png';
 import bgVideo from '../assets/ya.mp4';
 
-// Transparent Background Engine (Canvas)
+// Transparent Background Engine (Canvas) - Optimized for Performance
 function useRemoveWhiteBackground(src) {
   const [result, setResult] = useState(null);
 
   useEffect(() => {
+    let active = true;
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.src = src;
     img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
+      if (!active) return;
+      
+      const MAX_WIDTH = window.innerWidth < 768 ? 600 : 1000;
+      let width = img.width;
+      let height = img.height;
+      if (width > MAX_WIDTH) {
+         height = Math.round((MAX_WIDTH * height) / width);
+         width = MAX_WIDTH;
+      }
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+
+      const imageData = ctx.getImageData(0, 0, width, height);
       const d = imageData.data;
 
       for (let i = 0; i < d.length; i += 4) {
@@ -35,8 +46,9 @@ function useRemoveWhiteBackground(src) {
       }
 
       ctx.putImageData(imageData, 0, 0);
-      setResult(canvas.toDataURL('image/png'));
+      setResult(canvas.toDataURL('image/png', 0.8));
     };
+    return () => { active = false; };
   }, [src]);
 
   return result;
@@ -91,19 +103,20 @@ export default function Hero() {
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-60 blur-[4px]" // Increased visibility
+          className="w-full h-full object-cover opacity-30 md:opacity-60 blur-[2px] md:blur-[4px]" // Optimized performance for mobile
         >
           <source src={bgVideo} type="video/mp4" />
         </video>
+
         <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/20 to-primary" />
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 h-full flex flex-col justify-between py-24">
         
         {/* HUD: Meta Info */}
-        <div className="flex justify-between items-start z-10">
+        <div className="flex justify-between items-start z-10 pt-10 md:pt-0">
            <HUDElement label="Location" value="Barquisimeto • Lara" />
-           <HUDElement label="Status" value="Representative Elite" side="right" className="items-end text-right" />
+           <HUDElement label="Status" value="Representative Elite" side="right" className="items-end text-right hidden sm:flex" />
         </div>
 
         {/* 2 & 3. LAYERS: BENJIMUN Glow Text & Character */}
@@ -150,12 +163,12 @@ export default function Hero() {
 
               {processedImage ? (
                 <motion.img
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1.2, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
                   src={processedImage}
                   alt="Representative"
-                  className="relative h-[70vh] md:h-[90vh] w-auto object-contain drop-shadow-[0_45px_120px_rgba(0,0,0,0.9)]"
+                  className="relative h-[65vh] sm:h-[75vh] md:h-[90vh] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] md:drop-shadow-[0_45px_120px_rgba(0,0,0,0.9)] mt-10 md:mt-0"
                 />
               ) : (
                 <div className="w-12 h-12 border-2 border-accent border-t-transparent rounded-full animate-spin" />
@@ -165,21 +178,21 @@ export default function Hero() {
         </div>
 
         {/* 4. LAYER: HUD BOTTOM (Slogan & Buttons) - AT THE FRONT */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-16 relative z-50 pb-10">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-8 md:gap-16 relative z-50 pb-4 md:pb-10 w-full">
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 1.4, ease: "easeOut" }}
-            className="space-y-5 max-w-md text-center md:text-left drop-shadow-2xl"
+            className="space-y-3 md:space-y-5 w-full text-center md:text-left drop-shadow-2xl flex flex-col items-center md:items-start"
           >
             <div className="inline-flex items-center gap-3">
-               <div className="w-8 h-[1px] bg-accent/30" />
-               <span className="text-[10px] font-black text-accent uppercase tracking-[0.6em] block px-1">Motto Oficial</span>
+               <div className="hidden md:block w-8 h-[1px] bg-accent/30" />
+               <span className="text-[9px] md:text-[10px] font-black text-accent uppercase tracking-[0.6em] block px-1">Motto Oficial</span>
             </div>
             <div className="overflow-hidden">
-               <h2 className="text-3xl md:text-5xl font-black text-white leading-[0.95] uppercase tracking-[-0.03em] clash-display">
-                "Un solo mundo, <br/>
-                <span className="text-accent italic">un solo latido"</span>
+               <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white leading-[0.95] uppercase tracking-[-0.03em] clash-display">
+                "Un solo mundo, <br className="hidden sm:block"/>
+                <span className="text-accent italic"> un solo latido"</span>
                </h2>
             </div>
           </motion.div>
