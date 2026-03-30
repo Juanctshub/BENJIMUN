@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
@@ -10,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="bg-[#020617] min-h-screen selection:bg-accent selection:text-primary">
+    <div className="bg-primary min-h-screen selection:bg-accent selection:text-primary">
       <AnimatePresence mode="wait">
         {loading ? (
           <LoadingScreen key="loader" onComplete={() => setLoading(false)} />
@@ -19,70 +19,105 @@ function App() {
             key="content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            transition={{ duration: 1 }}
           >
             <Navbar />
-            
+
             <main>
               <Hero />
-              
+
               <Delegates />
 
-              {/* Elite Contact Section */}
-              <section id="contact" className="py-60 px-10 relative overflow-hidden bg-black/40">
-                <div className="max-w-5xl mx-auto text-center">
+              {/* About Section */}
+              <section id="about" className="py-32 px-6 bg-secondary/50">
+                <div className="max-w-4xl mx-auto text-center">
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    className="glass-premium p-20 md:p-32 rounded-[4rem] relative overflow-hidden group border-white/5"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                   >
-                    <div className="absolute top-0 right-0 p-20 opacity-5 pointer-events-none">
-                       <Mail size={200} />
-                    </div>
-                    
-                    <h2 className="syncopate text-4xl md:text-7xl font-black mb-12 leading-none tracking-tighter">
-                      EL PULSO <br/>
-                      <span className="text-accent underline decoration-white/5 underline-offset-8">ESTRATÉGICO</span>
+                    <span className="text-accent text-xs font-extrabold tracking-[0.5em] uppercase">
+                      🌐 Quiénes Somos
+                    </span>
+                    <h2 className="syncopate text-3xl md:text-5xl font-bold mt-4 mb-8 tracking-tight">
+                      Un Solo <span className="text-accent">Latido</span>
                     </h2>
-                    
-                    <p className="text-text-muted text-2xl mb-16 max-w-lg mx-auto font-bold opacity-80 decoration-accent/20">
-                      Conecta con la delegación que está redefiniendo negociaciones en Barquisimeto.
+                    <p className="text-text-muted text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                      <strong className="text-white">BENJIMUN</strong> es el Bloque Estratégico de
+                      Negociación Juvenil e Impulso al Modelo de las Naciones Unidas, con sede en
+                      Barquisimeto, Estado Lara. Nuestra misión es formar líderes diplomáticos
+                      comprometidos con el diálogo, la paz y la justicia global.
                     </p>
+                  </motion.div>
+                </div>
+              </section>
 
-                    <form className="flex flex-col md:flex-row gap-6 max-w-2xl mx-auto">
-                      <input 
-                        type="email" 
-                        placeholder="EMAIL INSTITUCIONAL" 
-                        className="flex-grow bg-white/5 border border-white/10 rounded-none px-8 py-6 focus:border-accent outline-none transition-colors font-black uppercase text-xs tracking-widest syncopate text-white placeholder-white/20"
-                      />
-                      <button className="glow-btn whitespace-nowrap flex items-center justify-center gap-3">
-                         ENVIAR <ArrowRight size={20} />
-                      </button>
-                    </form>
+              {/* Contact Section */}
+              <section id="contact" className="py-32 px-6">
+                <div className="max-w-4xl mx-auto">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="glass-card rounded-3xl p-12 md:p-20 relative overflow-hidden"
+                  >
+                    {/* Background icon */}
+                    <div className="absolute top-8 right-8 opacity-[0.03] pointer-events-none">
+                      <Mail size={200} />
+                    </div>
+
+                    <div className="relative z-10 text-center">
+                      <span className="text-accent text-xs font-extrabold tracking-[0.5em] uppercase">
+                        Conecta
+                      </span>
+                      <h2 className="syncopate text-3xl md:text-5xl font-bold mt-4 mb-4 tracking-tight">
+                        Contáctanos
+                      </h2>
+                      <p className="text-text-muted text-lg mb-10 max-w-md mx-auto">
+                        ¿Listo para ser parte del impulso estratégico? Escríbenos.
+                      </p>
+
+                      <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                        <input
+                          type="email"
+                          placeholder="tu@email.com"
+                          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-5 py-4 text-sm text-white placeholder-white/30 focus:border-accent focus:outline-none transition-colors font-semibold"
+                        />
+                        <button
+                          type="submit"
+                          className="px-8 py-4 bg-accent text-primary font-extrabold text-sm tracking-widest uppercase rounded-lg hover:bg-white hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                          Enviar <ArrowRight size={16} />
+                        </button>
+                      </form>
+                    </div>
                   </motion.div>
                 </div>
               </section>
             </main>
 
-            {/* Footer Elite */}
-            <footer className="py-24 px-10 border-t border-white/5 bg-black/60">
-              <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16">
+            {/* Footer */}
+            <footer className="py-16 px-6 border-t border-white/5">
+              <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="text-center md:text-left">
-                  <h4 className="syncopate text-3xl font-black tracking-tighter">BENJIMUN</h4>
-                  <p className="text-text-muted text-xs mt-4 font-black uppercase tracking-[0.4em] opacity-40">
-                    © 2026 BLOQUE ESTRATÉGICO DE NEGOCIACIÓN JUVENIL.
+                  <span className="syncopate text-xl font-bold">BENJIMUN</span>
+                  <p className="text-text-muted text-xs mt-2 tracking-widest uppercase font-semibold opacity-60">
+                    © 2026 Bloque Estratégico de Negociación Juvenil
                   </p>
                 </div>
-                
-                <div className="flex gap-12">
-                  <a href="#" className="text-white/20 hover:text-accent transition-colors">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+
+                <div className="flex gap-6">
+                  {/* Instagram */}
+                  <a href="#" className="text-white/30 hover:text-accent transition-colors">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
                   </a>
-                  <a href="#" className="text-white/20 hover:text-accent transition-colors">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-1 2.17-2 4a10 10 0 1 1-12.2 11.6L2 22l4.58-4.58A10.74 10.74 0 0 0 12 18a10.28 10.28 0 0 0 7.31-3.04L22 4z"></path></svg>
+                  {/* X / Twitter */}
+                  <a href="#" className="text-white/30 hover:text-accent transition-colors">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg>
                   </a>
-                  <a href="#" className="text-white/20 hover:text-accent transition-colors">
-                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  {/* LinkedIn */}
+                  <a href="#" className="text-white/30 hover:text-accent transition-colors">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
                   </a>
                 </div>
               </div>
